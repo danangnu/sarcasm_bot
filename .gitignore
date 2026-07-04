@@ -1,0 +1,7 @@
+@"
+.venv/
+__pycache__/
+*.pyc
+.env
+sarcasm_model_compat.keras
+"@ | Out-File -Encoding utf8 .gitignore

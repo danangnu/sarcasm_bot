@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarcasm Detection Chatbot</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <main class="app-shell">
+        <section class="intro-panel" aria-label="Project overview">
+            <span class="eyebrow">Milestone 1 Demo</span>
+            <h1>Sarcasm Detection Chatbot</h1>
+            <p>
+                Paste a tweet, article paragraph, headline, or custom message. The app scores the text
+                with the trained BiLSTM model, then generates a chatbot response.
+            </p>
+
+            <div class="flow-card">
+                <span>User Text</span>
+                <strong>→</strong>
+                <span>FastAPI</span>
+                <strong>→</strong>
+                <span>BiLSTM Score</span>
+                <strong>→</strong>
+                <span>Bot Reply</span>
+            </div>
+
+            <div class="status-card" id="status-card">
+                <div>
+                    <small>API Status</small>
+                    <strong id="api-status">Checking...</strong>
+                </div>
+                <div>
+                    <small>Gemini</small>
+                    <strong id="gemini-status">Checking...</strong>
+                </div>
+            </div>
+
+            <div class="sample-panel">
+                <p>Try a sample:</p>
+                <button class="sample-btn" data-sample="Oh great, another Monday morning. Exactly what I needed.">Sarcastic tweet</button>
+                <button class="sample-btn" data-sample="The mayor announced a new public transport plan during Monday's press conference.">News paragraph</button>
+                <button class="sample-btn" data-sample="I really appreciate your help with the project today.">Sincere text</button>
+            </div>
+        </section>
+
+        <section class="chat-container" aria-label="Sarcasm chatbot">
+            <header class="chat-header">
+                <div class="bot-icon" aria-hidden="true">SB</div>
+                <div>
+                    <h2>Sarcasm Bot</h2>
+                    <p>Scores text and replies with controlled sarcasm.</p>
+                </div>
+            </header>
+
+            <div class="chat-box" id="chat-box" aria-live="polite"></div>
+
+            <div class="input-area">
+                <textarea id="user-input" rows="3" placeholder="Paste a tweet, headline, article paragraph, or type your own message..." autocomplete="off"></textarea>
+                <div class="button-row">
+                    <button id="analyze-btn" type="button" class="secondary-btn">Analyze only</button>
+                    <button id="send-btn" type="button">Send to bot</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

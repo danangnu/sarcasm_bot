@@ -1,0 +1,10 @@
+fastapi
+pydantic
+uvicorn
+numpy
+python-dotenv
+google-genai
+# TensorFlow/Keras runtime for the saved BiLSTM model.
+# The app also includes a compatibility loader for .keras archives saved with newer Keras configs.
+tensorflow>=2.16
+keras>=3.0
