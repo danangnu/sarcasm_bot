@@ -3,82 +3,107 @@ document.addEventListener("DOMContentLoaded", () => {
     const userInput = document.getElementById("user-input");
     const sendBtn = document.getElementById("send-btn");
     const analyzeBtn = document.getElementById("analyze-btn");
+    const clearBtn = document.getElementById("clear-btn");
+    const themeBtn = document.getElementById("theme-btn");
+    const charCount = document.getElementById("char-count");
     const apiStatus = document.getElementById("api-status");
     const geminiStatus = document.getElementById("gemini-status");
     const sampleButtons = document.querySelectorAll(".sample-btn");
+    const MAX_CHARS = 8000;
 
     const formatPercent = (value) => `${Math.round(Number(value) * 100)}%`;
+    const timestamp = () => new Intl.DateTimeFormat([], { hour: "2-digit", minute: "2-digit" }).format(new Date());
+
+    function updateCounter() {
+        const length = userInput.value.length;
+        charCount.textContent = `${length} / ${MAX_CHARS}`;
+        charCount.classList.toggle("near-limit", length > MAX_CHARS * 0.9);
+    }
 
     function setBusy(isBusy) {
         userInput.disabled = isBusy;
         sendBtn.disabled = isBusy;
         analyzeBtn.disabled = isBusy;
+        clearBtn.disabled = isBusy;
+        sendBtn.textContent = isBusy ? "Working..." : "Send to bot";
+    }
+
+    function addMessageActions(msgDiv, text) {
+        const meta = document.createElement("div");
+        meta.className = "message-meta";
+        const time = document.createElement("span");
+        time.textContent = timestamp();
+        const copy = document.createElement("button");
+        copy.type = "button";
+        copy.className = "copy-btn";
+        copy.textContent = "Copy";
+        copy.addEventListener("click", async () => {
+            await navigator.clipboard.writeText(text);
+            copy.textContent = "Copied";
+            setTimeout(() => { copy.textContent = "Copy"; }, 1200);
+        });
+        meta.append(time, copy);
+        msgDiv.appendChild(meta);
     }
 
     function appendMessage(text, sender, scores = null) {
         const msgDiv = document.createElement("div");
-        msgDiv.classList.add("message", sender === "user" ? "user-message" : "bot-message");
-
-        const bubbleDiv = document.createElement("div");
-        bubbleDiv.classList.add("bubble");
-        bubbleDiv.textContent = text;
-        msgDiv.appendChild(bubbleDiv);
+        msgDiv.className = `message ${sender === "user" ? "user-message" : "bot-message"}`;
+        const bubble = document.createElement("div");
+        bubble.className = "bubble";
+        bubble.textContent = text;
+        msgDiv.appendChild(bubble);
 
         if (scores) {
-            const scoreDiv = document.createElement("div");
-            scoreDiv.classList.add("score-card");
-
+            const scoreCard = document.createElement("div");
+            scoreCard.className = "score-card";
             const rows = [];
             if (scores.user_sarcasm_score !== undefined) {
-                rows.push(`Your Sarcasm: ${formatPercent(scores.user_sarcasm_score)} (${scores.user_is_sarcastic ? "Sarcastic" : "Not sarcastic"})`);
+                rows.push(`<span><b>Your result:</b> ${formatPercent(scores.user_sarcasm_score)} · ${scores.user_is_sarcastic ? "Sarcastic" : "Not sarcastic"} · ${scores.user_confidence || "—"} confidence</span>`);
             }
+            if (scores.user_explanation) rows.push(`<span class="explanation">${scores.user_explanation}</span>`);
             if (scores.reply_sarcasm_score !== undefined) {
-                rows.push(`Bot Sarcasm: ${formatPercent(scores.reply_sarcasm_score)} (${scores.reply_is_sarcastic ? "Sarcastic" : "Not sarcastic"})`);
+                rows.push(`<span><b>Bot reply:</b> ${formatPercent(scores.reply_sarcasm_score)} · ${scores.reply_is_sarcastic ? "Sarcastic" : "Not sarcastic"} · ${scores.reply_confidence || "—"} confidence</span>`);
             }
-            if (scores.used_gemini !== undefined) {
-                rows.push(`Response source: ${scores.used_gemini ? "Gemini" : "Local fallback"}`);
+            if (scores.response_source) {
+                rows.push(`<span><b>Source:</b> ${scores.response_source}${scores.generation_attempts ? ` · ${scores.generation_attempts} attempt(s)` : ""}</span>`);
             }
-
-            scoreDiv.innerHTML = rows.map((row) => `<span>${row}</span>`).join("");
-            msgDiv.appendChild(scoreDiv);
+            if (scores.fallback_reason) rows.push(`<span class="fallback-note"><b>Fallback reason:</b> ${scores.fallback_reason}</span>`);
+            scoreCard.innerHTML = rows.join("");
+            msgDiv.appendChild(scoreCard);
         }
 
+        addMessageActions(msgDiv, text);
         chatBox.appendChild(msgDiv);
         chatBox.scrollTop = chatBox.scrollHeight;
     }
 
     function showTypingIndicator(label = "Thinking") {
-        const typingMsg = document.createElement("div");
-        typingMsg.classList.add("message", "bot-message");
-        typingMsg.id = "active-typing-indicator";
-
-        const bubbleDiv = document.createElement("div");
-        bubbleDiv.classList.add("bubble", "typing-indicator");
-        bubbleDiv.innerHTML = `<span>${label}</span><span class="dot"></span><span class="dot"></span><span class="dot"></span>`;
-
-        typingMsg.appendChild(bubbleDiv);
-        chatBox.appendChild(typingMsg);
+        const item = document.createElement("div");
+        item.className = "message bot-message";
+        item.id = "active-typing-indicator";
+        item.innerHTML = `<div class="bubble typing-indicator"><span>${label}</span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>`;
+        chatBox.appendChild(item);
         chatBox.scrollTop = chatBox.scrollHeight;
     }
 
     function removeTypingIndicator() {
-        const activeIndicator = document.getElementById("active-typing-indicator");
-        if (activeIndicator) {
-            activeIndicator.remove();
-        }
+        document.getElementById("active-typing-indicator")?.remove();
     }
 
     async function postJson(url, body) {
-        const response = await fetch(url, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(body)
-        });
-
-        const data = await response.json().catch(() => ({}));
-        if (!response.ok) {
-            throw new Error(data.detail || "Request failed.");
+        let response;
+        try {
+            response = await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body)
+            });
+        } catch {
+            throw new Error("Cannot reach the FastAPI server.");
         }
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(data.detail || `Request failed (${response.status}).`);
         return data;
     }
 
@@ -86,12 +111,12 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const response = await fetch("/health");
             const data = await response.json();
-
-            apiStatus.textContent = data.model_ready && data.tokenizer_ready ? "Ready" : "Needs setup";
-            apiStatus.className = data.model_ready && data.tokenizer_ready ? "status-ok" : "status-warn";
-            geminiStatus.textContent = data.gemini_configured ? "Configured" : "Fallback mode";
+            const ready = data.model_ready && data.tokenizer_ready;
+            apiStatus.textContent = ready ? "Ready" : "Needs setup";
+            apiStatus.className = ready ? "status-ok" : "status-warn";
+            geminiStatus.textContent = data.gemini_configured ? `Configured · ${data.gemini_model}` : "Local fallback";
             geminiStatus.className = data.gemini_configured ? "status-ok" : "status-warn";
-        } catch (error) {
+        } catch {
             apiStatus.textContent = "Offline";
             apiStatus.className = "status-error";
             geminiStatus.textContent = "Unknown";
@@ -99,22 +124,32 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    async function analyzeOnly() {
+    function getText() {
         const text = userInput.value.trim();
-        if (!text) return;
+        if (!text) {
+            userInput.focus();
+            return null;
+        }
+        return text;
+    }
 
+    async function analyzeOnly() {
+        const text = getText();
+        if (!text) return;
         appendMessage(text, "user");
         setBusy(true);
         showTypingIndicator("Scoring");
-
         try {
             const data = await postJson("/analyze", { message: text });
             removeTypingIndicator();
-            appendMessage(`Analysis result: ${data.label}. Sarcasm confidence is ${formatPercent(data.score)}.`, "bot", {
+            appendMessage(`Analysis: ${data.label} (${formatPercent(data.score)}).`, "bot", {
                 user_sarcasm_score: data.score,
-                user_is_sarcastic: data.is_sarcastic
+                user_is_sarcastic: data.is_sarcastic,
+                user_confidence: data.confidence,
+                user_explanation: data.explanation
             });
             userInput.value = "";
+            updateCounter();
         } catch (error) {
             removeTypingIndicator();
             appendMessage(`Analyze error: ${error.message}`, "bot");
@@ -125,14 +160,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function sendMessage() {
-        const text = userInput.value.trim();
+        const text = getText();
         if (!text) return;
-
         appendMessage(text, "user");
         userInput.value = "";
+        updateCounter();
         setBusy(true);
-        showTypingIndicator();
-
+        showTypingIndicator("Generating reply");
         try {
             const data = await postJson("/chat", { message: text });
             removeTypingIndicator();
@@ -146,24 +180,33 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    function resetChat() {
+        chatBox.innerHTML = "";
+        appendMessage("Paste a tweet, article paragraph, headline, or message. I will estimate the sarcasm and can generate a reply.", "bot");
+    }
+
     sendBtn.addEventListener("click", sendMessage);
     analyzeBtn.addEventListener("click", analyzeOnly);
-
+    clearBtn.addEventListener("click", resetChat);
+    themeBtn.addEventListener("click", () => {
+        document.body.classList.toggle("light-theme");
+        themeBtn.textContent = document.body.classList.contains("light-theme") ? "☾" : "☀";
+    });
+    userInput.addEventListener("input", updateCounter);
     userInput.addEventListener("keydown", (event) => {
         if (event.key === "Enter" && !event.shiftKey) {
             event.preventDefault();
             sendMessage();
         }
     });
+    sampleButtons.forEach((button) => button.addEventListener("click", () => {
+        userInput.value = button.dataset.sample;
+        updateCounter();
+        userInput.focus();
+    }));
 
-    sampleButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-            userInput.value = button.dataset.sample;
-            userInput.focus();
-        });
-    });
-
-    appendMessage("Paste a tweet, article paragraph, headline, or message. I will score the sarcasm and reply.", "bot");
+    resetChat();
+    updateCounter();
     loadHealth();
     userInput.focus();
 });

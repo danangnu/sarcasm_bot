@@ -408,3 +408,26 @@ button:disabled {
         max-width: 94%;
     }
 }
+
+/* Milestone 2 enhancements */
+.intro-topline { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.icon-btn { min-height:36px; padding:8px 12px; border-radius:12px; color:var(--text); background:rgba(255,255,255,.08); border:1px solid var(--card-border); font-size:.78rem; }
+.chat-title { flex:1; }
+.input-meta { display:flex; justify-content:space-between; gap:12px; color:var(--muted); font-size:.72rem; }
+.near-limit { color:var(--warning); font-weight:800; }
+.message-meta { display:flex; align-items:center; gap:10px; color:var(--muted); font-size:.68rem; padding:0 4px; }
+.user-message .message-meta { justify-content:flex-end; }
+.copy-btn { min-height:auto; padding:2px 6px; border-radius:7px; background:transparent; color:var(--muted); font-size:.68rem; font-weight:600; }
+.copy-btn:hover { color:var(--text); background:rgba(255,255,255,.07); }
+.score-card b { color:var(--text); }
+.score-card .explanation { color:#cbd5e1; }
+.score-card .fallback-note { color:var(--warning); }
+.light-theme { --bg:#eef2ff; --panel:#ffffff; --panel-2:#f1f5f9; --card:rgba(255,255,255,.8); --card-border:rgba(15,23,42,.12); --text:#172033; --muted:#64748b; color-scheme:light; }
+.light-theme .intro-panel,.light-theme .chat-container { background:rgba(255,255,255,.82); box-shadow:0 28px 60px rgba(79,70,229,.12); }
+.light-theme .chat-box { background-color:#f8fafc; }
+.light-theme .bot-message .bubble { color:#1f2937; }
+.light-theme textarea { color:#172033; background:rgba(15,23,42,.04); }
+.light-theme .input-area { background:rgba(255,255,255,.96); }
+.light-theme .score-card { background:#fff; color:#5b21b6; }
+.light-theme .score-card .explanation { color:#475569; }
+@media (max-width:520px) { .input-meta { flex-direction:column; gap:3px; } .chat-header { padding:16px; } }

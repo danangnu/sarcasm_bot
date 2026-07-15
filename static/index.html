@@ -4,45 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sarcasm Detection Chatbot</title>
-    <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <main class="app-shell">
         <section class="intro-panel" aria-label="Project overview">
-            <span class="eyebrow">Milestone 1 Demo</span>
+            <div class="intro-topline">
+                <span class="eyebrow">Milestone 2</span>
+                <button id="theme-btn" class="icon-btn" type="button" aria-label="Toggle theme">☀</button>
+            </div>
             <h1>Sarcasm Detection Chatbot</h1>
-            <p>
-                Paste a tweet, article paragraph, headline, or custom message. The app scores the text
-                with the trained BiLSTM model, then generates a chatbot response.
-            </p>
+            <p>Analyze pasted text, review the model's confidence, and generate a controlled sarcastic reply using Gemini or the local fallback.</p>
 
             <div class="flow-card">
-                <span>User Text</span>
-                <strong>→</strong>
-                <span>FastAPI</span>
-                <strong>→</strong>
-                <span>BiLSTM Score</span>
-                <strong>→</strong>
-                <span>Bot Reply</span>
+                <span>User Text</span><strong>→</strong><span>BiLSTM Score</span><strong>→</strong><span>Gemini / Fallback</span><strong>→</strong><span>Reply Score</span>
             </div>
 
-            <div class="status-card" id="status-card">
-                <div>
-                    <small>API Status</small>
-                    <strong id="api-status">Checking...</strong>
-                </div>
-                <div>
-                    <small>Gemini</small>
-                    <strong id="gemini-status">Checking...</strong>
-                </div>
+            <div class="status-card">
+                <div><small>Model API</small><strong id="api-status">Checking...</strong></div>
+                <div><small>Gemini</small><strong id="gemini-status">Checking...</strong></div>
             </div>
 
             <div class="sample-panel">
-                <p>Try a sample:</p>
-                <button class="sample-btn" data-sample="Oh great, another Monday morning. Exactly what I needed.">Sarcastic tweet</button>
+                <p>Try a sample</p>
+                <button class="sample-btn" data-sample="Oh great, another Monday morning. Exactly what I needed.">Sarcastic message</button>
                 <button class="sample-btn" data-sample="The mayor announced a new public transport plan during Monday's press conference.">News paragraph</button>
                 <button class="sample-btn" data-sample="I really appreciate your help with the project today.">Sincere text</button>
             </div>
@@ -51,16 +39,15 @@
         <section class="chat-container" aria-label="Sarcasm chatbot">
             <header class="chat-header">
                 <div class="bot-icon" aria-hidden="true">SB</div>
-                <div>
-                    <h2>Sarcasm Bot</h2>
-                    <p>Scores text and replies with controlled sarcasm.</p>
-                </div>
+                <div class="chat-title"><h2>Sarcasm Bot</h2><p>Model estimates should be read with context.</p></div>
+                <button id="clear-btn" class="icon-btn" type="button" title="Clear chat">Clear</button>
             </header>
 
             <div class="chat-box" id="chat-box" aria-live="polite"></div>
 
             <div class="input-area">
-                <textarea id="user-input" rows="3" placeholder="Paste a tweet, headline, article paragraph, or type your own message..." autocomplete="off"></textarea>
+                <textarea id="user-input" rows="3" maxlength="8000" placeholder="Paste a tweet, headline, article paragraph, or type a message..."></textarea>
+                <div class="input-meta"><span id="input-help">Enter sends · Shift+Enter adds a line</span><span id="char-count">0 / 8000</span></div>
                 <div class="button-row">
                     <button id="analyze-btn" type="button" class="secondary-btn">Analyze only</button>
                     <button id="send-btn" type="button">Send to bot</button>
@@ -68,7 +55,6 @@
             </div>
         </section>
     </main>
-
     <script src="script.js"></script>
 </body>
 </html>

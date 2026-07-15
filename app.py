@@ -1,24 +1,30 @@
 from __future__ import annotations
 
+from pathlib import Path
+
+import uvicorn
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
-from pathlib import Path
-import uvicorn
 
 from core import SarcasmEngineError, analyze_text, get_engine_status, respond
 
+MAX_INPUT_CHARS = 8000
+
 
 class ChatRequest(BaseModel):
-    message: str = Field(..., min_length=1, max_length=8000)
+    message: str = Field(..., min_length=1, max_length=MAX_INPUT_CHARS)
 
 
 class AnalyzeResponse(BaseModel):
     score: float
     is_sarcastic: bool
     label: str
+    confidence: str
+    explanation: str
     cleaned_text: str
+    character_count: int
 
 
 class ChatResponse(BaseModel):
@@ -27,27 +33,32 @@ class ChatResponse(BaseModel):
     reply_sarcasm_score: float
     user_is_sarcastic: bool
     reply_is_sarcastic: bool
-    used_gemini: bool
+    user_confidence: str
+    reply_confidence: str
+    user_explanation: str
+    response_source: str
+    fallback_reason: str | None
+    generation_attempts: int
 
 
 app = FastAPI(
     title="Sarcasm Detection Chatbot API",
-    version="1.0.0-milestone-1",
-    description="Working demo API for sarcasm scoring and chatbot response generation.",
+    version="2.0.0-milestone-2",
+    description="Milestone 2 API with improved Gemini reliability, diagnostics, and presentation metadata.",
 )
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_credentials=False,
+    allow_methods=["GET", "POST"],
+    allow_headers=["Content-Type"],
 )
 
 
 @app.get("/health")
 def health_check():
-    return {"status": "ok", **get_engine_status()}
+    return {"status": "ok", "max_input_chars": MAX_INPUT_CHARS, **get_engine_status()}
 
 
 @app.post("/analyze", response_model=AnalyzeResponse)
@@ -55,19 +66,21 @@ def analyze_endpoint(request: ChatRequest):
     message = request.message.strip()
     if not message:
         raise HTTPException(status_code=400, detail="Message cannot be empty.")
-
     try:
         result = analyze_text(message)
         return AnalyzeResponse(
             score=round(result.score, 4),
             is_sarcastic=result.is_sarcastic,
             label=result.label,
+            confidence=result.confidence,
+            explanation=result.explanation,
             cleaned_text=result.cleaned_text,
+            character_count=len(message),
         )
     except SarcasmEngineError as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=f"Analyze failed: {exc}") from exc
+        raise HTTPException(status_code=500, detail="The text could not be analyzed. Check the server log.") from exc
 
 
 @app.post("/chat", response_model=ChatResponse)
@@ -75,7 +88,6 @@ def chat_endpoint(request: ChatRequest):
     message = request.message.strip()
     if not message:
         raise HTTPException(status_code=400, detail="Message cannot be empty.")
-
     try:
         result = respond(message)
         return ChatResponse(
@@ -84,12 +96,17 @@ def chat_endpoint(request: ChatRequest):
             reply_sarcasm_score=round(result.reply_sarcasm_score, 4),
             user_is_sarcastic=result.user_is_sarcastic,
             reply_is_sarcastic=result.reply_is_sarcastic,
-            used_gemini=result.used_gemini,
+            user_confidence=result.user_confidence,
+            reply_confidence=result.reply_confidence,
+            user_explanation=result.user_explanation,
+            response_source=result.response_source,
+            fallback_reason=result.fallback_reason,
+            generation_attempts=result.generation_attempts,
         )
     except SarcasmEngineError as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=f"Chat failed: {exc}") from exc
+        raise HTTPException(status_code=500, detail="The chatbot request failed. Check the server log.") from exc
 
 
 BASE_DIR = Path(__file__).resolve().parent
