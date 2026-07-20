@@ -1,0 +1,51 @@
+text,label,category
+Heavy rainfall causes flooding across northern Queensland.,0,weather
+NASA launches new weather observation satellite.,0,science
+Central bank keeps interest rates unchanged.,0,economy
+Parliament passes a national housing package after months of debate.,0,government
+Health officials open a new vaccination clinic in the regional centre.,0,health
+The national rail operator restores services after signal repairs.,0,transport
+Scientists detect water vapour in the atmosphere of a distant planet.,0,science
+The finance ministry publishes updated economic forecasts.,0,economy
+A severe storm damages homes along the northern coast.,0,weather
+The city council approves funding for a new public library.,0,government
+The unemployment rate falls to its lowest level in three years.,0,economy
+A passenger ferry resumes service after scheduled maintenance.,0,transport
+The education department announces scholarships for rural students.,0,education
+Emergency crews evacuate residents ahead of the approaching cyclone.,0,weather
+The national museum opens an exhibition of Indigenous art.,0,culture
+The government confirms the election will be held in October.,0,government
+Researchers begin a clinical trial of a new cancer treatment.,0,health
+The weather bureau records above-average rainfall during June.,0,weather
+The airport adds direct flights to three regional destinations.,0,transport
+The central bank raises interest rates by a quarter percentage point.,0,economy
+Police close the highway after a multi-vehicle collision.,0,public_safety
+The university receives funding for a new engineering laboratory.,0,education
+The energy regulator releases its annual electricity market report.,0,energy
+The government provides disaster assistance to flood-affected towns.,0,government
+The national team wins its opening match by two goals.,0,sport
+The local currency strengthens after positive employment data.,0,economy
+The health department updates advice for travellers.,0,health
+A new bridge opens to traffic on Monday morning.,0,transport
+The agriculture ministry forecasts a larger wheat harvest.,0,agriculture
+The court schedules the appeal hearing for next month.,0,law
+Local commuters thrilled to spend another three hours sitting in traffic.,1,transport
+Nation celebrates exciting new opportunity to pay higher taxes.,1,economy
+Government unveils revolutionary plan to hold another meeting.,1,government
+Residents delighted as electricity prices rise for the fourth time.,1,energy
+Airport improves passenger experience by cancelling every morning flight.,1,transport
+Bank rewards loyal customers with another monthly service fee.,1,finance
+Council solves parking shortage by removing hundreds of parking spaces.,1,government
+Company makes website easier to use by hiding the login button.,1,technology
+Public transport achieves perfect punctuality after cancelling all services.,1,transport
+Hospital reduces waiting times by no longer counting people who are waiting.,1,health
+Government cuts paperwork with a mandatory twenty-page form.,1,government
+Residents welcome surprise water outage during hottest day of the year.,1,weather
+School supports student wellbeing with five additional exams.,1,education
+Airline simplifies travel by introducing six new baggage categories.,1,transport
+City fixes congestion by closing the only bridge during peak hour.,1,transport
+Technology company protects privacy by collecting even more personal data.,1,technology
+Workers celebrate flexible scheduling with compulsory weekend shifts.,1,work
+University lowers student costs with a new fee-processing fee.,1,education
+Weather service issues perfectly timed warning after the storm passes.,1,weather
+Nation relieved as leaders agree to discuss when they might make a decision.,1,government

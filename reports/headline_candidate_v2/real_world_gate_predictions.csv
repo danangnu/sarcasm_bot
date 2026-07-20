@@ -1,0 +1,51 @@
+text,cleaned_text,label,category,raw_probability,calibrated_probability,predicted_label,correct
+Heavy rainfall causes flooding across northern Queensland.,heavy rainfall causes flooding across northern queensland,0,weather,0.2181461,0.1977541,0,True
+NASA launches new weather observation satellite.,nasa launches new weather observation satellite,0,science,0.39741033,0.3686182,0,True
+Central bank keeps interest rates unchanged.,central bank keeps interest rates unchanged,0,economy,0.3818486,0.35348758,0,True
+Parliament passes a national housing package after months of debate.,parliament passes a national housing package after months of debate,0,government,0.09586351,0.085473605,0,True
+Health officials open a new vaccination clinic in the regional centre.,health officials open a new vaccination clinic in the regional centre,0,health,0.017197182,0.015127361,0,True
+The national rail operator restores services after signal repairs.,the national rail operator restores services after signal repairs,0,transport,0.03278349,0.028936151,0,True
+Scientists detect water vapour in the atmosphere of a distant planet.,scientists detect water vapour in the atmosphere of a distant planet,0,science,0.28160384,0.257383,0,True
+The finance ministry publishes updated economic forecasts.,the finance ministry publishes updated economic forecasts,0,economy,0.020027865,0.017629717,0,True
+A severe storm damages homes along the northern coast.,a severe storm damages homes along the northern coast,0,weather,0.011663312,0.010243274,0,True
+The city council approves funding for a new public library.,the city council approves funding for a new public library,0,government,0.017625311,0.015505664,0,True
+The unemployment rate falls to its lowest level in three years.,the unemployment rate falls to its lowest level in three years,0,economy,0.027381282,0.0241419,0,True
+A passenger ferry resumes service after scheduled maintenance.,a passenger ferry resumes service after scheduled maintenance,0,transport,0.06818587,0.060545493,0,True
+The education department announces scholarships for rural students.,the education department announces scholarships for rural students,0,education,0.032993928,0.029123075,0,True
+Emergency crews evacuate residents ahead of the approaching cyclone.,emergency crews evacuate residents ahead of the approaching cyclone,0,weather,0.17970401,0.16208361,0,True
+The national museum opens an exhibition of Indigenous art.,the national museum opens an exhibition of indigenous art,0,culture,0.022497172,0.01981471,0,True
+The government confirms the election will be held in October.,the government confirms the election will be held in october,0,government,0.014143728,0.012431078,0,True
+Researchers begin a clinical trial of a new cancer treatment.,researchers begin a clinical trial of a new cancer treatment,0,health,0.023237577,0.020470228,0,True
+The weather bureau records above-average rainfall during June.,the weather bureau records above average rainfall during june,0,weather,0.04420334,0.03909717,0,True
+The airport adds direct flights to three regional destinations.,the airport adds direct flights to three regional destinations,0,transport,0.030176794,0.026621785,0,True
+The central bank raises interest rates by a quarter percentage point.,the central bank raises interest rates by a quarter percentage point,0,economy,0.047102217,0.041681983,0,True
+Police close the highway after a multi-vehicle collision.,police close the highway after a multi vehicle collision,0,public_safety,0.013100084,0.011510271,0,True
+The university receives funding for a new engineering laboratory.,the university receives funding for a new engineering laboratory,0,education,0.012119669,0.010645619,0,True
+The energy regulator releases its annual electricity market report.,the energy regulator releases its annual electricity market report,0,energy,0.03884304,0.034323398,0,True
+The government provides disaster assistance to flood-affected towns.,the government provides disaster assistance to flood affected towns,0,government,0.02956379,0.0260778,0,True
+The national team wins its opening match by two goals.,the national team wins its opening match by two goals,0,sport,0.031488318,0.027785992,0,True
+The local currency strengthens after positive employment data.,the local currency strengthens after positive employment data,0,economy,0.066355206,0.058903206,0,True
+The health department updates advice for travellers.,the health department updates advice for travellers,0,health,0.026307616,0.023190059,0,True
+A new bridge opens to traffic on Monday morning.,a new bridge opens to traffic on monday morning,0,transport,0.07028072,0.062425777,0,True
+The agriculture ministry forecasts a larger wheat harvest.,the agriculture ministry forecasts a larger wheat harvest,0,agriculture,0.026095483,0.023002036,0,True
+The court schedules the appeal hearing for next month.,the court schedules the appeal hearing for next month,0,law,0.029952848,0.02642304,0,True
+Local commuters thrilled to spend another three hours sitting in traffic.,local commuters thrilled to spend another three hours sitting in traffic,1,transport,0.99693555,0.9965892,1,True
+Nation celebrates exciting new opportunity to pay higher taxes.,nation celebrates exciting new opportunity to pay higher taxes,1,economy,0.9864261,0.9848579,1,True
+Government unveils revolutionary plan to hold another meeting.,government unveils revolutionary plan to hold another meeting,1,government,0.97893995,0.97650355,1,True
+Residents delighted as electricity prices rise for the fourth time.,residents delighted as electricity prices rise for the fourth time,1,energy,0.8626573,0.84824616,1,True
+Airport improves passenger experience by cancelling every morning flight.,airport improves passenger experience by cancelling every morning flight,1,transport,0.9365413,0.92937773,1,True
+Bank rewards loyal customers with another monthly service fee.,bank rewards loyal customers with another monthly service fee,1,finance,0.92848194,0.92046386,1,True
+Council solves parking shortage by removing hundreds of parking spaces.,council solves parking shortage by removing hundreds of parking spaces,1,government,0.92206705,0.9133798,1,True
+Company makes website easier to use by hiding the login button.,company makes website easier to use by hiding the login button,1,technology,0.90680975,0.89657015,1,True
+Public transport achieves perfect punctuality after cancelling all services.,public transport achieves perfect punctuality after cancelling all services,1,transport,0.77385986,0.75253767,1,True
+Hospital reduces waiting times by no longer counting people who are waiting.,hospital reduces waiting times by no longer counting people who are waiting,1,health,0.97621197,0.9734611,1,True
+Government cuts paperwork with a mandatory twenty-page form.,government cuts paperwork with a mandatory twenty page form,1,government,0.33431983,0.30762872,0,False
+Residents welcome surprise water outage during hottest day of the year.,residents welcome surprise water outage during hottest day of the year,1,weather,0.97096086,0.9676079,1,True
+School supports student wellbeing with five additional exams.,school supports student wellbeing with five additional exams,1,education,0.4991433,0.46895337,1,True
+Airline simplifies travel by introducing six new baggage categories.,airline simplifies travel by introducing six new baggage categories,1,transport,0.70941055,0.684319,1,True
+City fixes congestion by closing the only bridge during peak hour.,city fixes congestion by closing the only bridge during peak hour,1,transport,0.9309389,0.9231797,1,True
+Technology company protects privacy by collecting even more personal data.,technology company protects privacy by collecting even more personal data,1,technology,0.8993299,0.8883499,1,True
+Workers celebrate flexible scheduling with compulsory weekend shifts.,workers celebrate flexible scheduling with compulsory weekend shifts,1,work,0.82179755,0.8039593,1,True
+University lowers student costs with a new fee-processing fee.,university lowers student costs with a new fee processing fee,1,education,0.24275169,0.22076455,0,False
+Weather service issues perfectly timed warning after the storm passes.,weather service issues perfectly timed warning after the storm passes,1,weather,0.1446312,0.12983693,0,False
+Nation relieved as leaders agree to discuss when they might make a decision.,nation relieved as leaders agree to discuss when they might make a decision,1,government,0.9944401,0.99380493,1,True

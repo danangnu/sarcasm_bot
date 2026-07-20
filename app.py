@@ -37,14 +37,17 @@ class ChatResponse(BaseModel):
     reply_confidence: str
     user_explanation: str
     response_source: str
+    fallback_code: str | None
+    fallback_message: str | None
     fallback_reason: str | None
     generation_attempts: int
+    request_duration_ms: int
 
 
 app = FastAPI(
     title="Sarcasm Detection Chatbot API",
-    version="2.0.0-milestone-2",
-    description="Milestone 2 API with improved Gemini reliability, diagnostics, and presentation metadata.",
+    version="2.2.0-milestone-2-pass-3",
+    description="Milestone 2 API with calibrated confidence bands, safe Gemini fallback handling, and polished result metadata.",
 )
 
 app.add_middleware(
@@ -100,8 +103,11 @@ def chat_endpoint(request: ChatRequest):
             reply_confidence=result.reply_confidence,
             user_explanation=result.user_explanation,
             response_source=result.response_source,
+            fallback_code=result.fallback_code,
+            fallback_message=result.fallback_message,
             fallback_reason=result.fallback_reason,
             generation_attempts=result.generation_attempts,
+            request_duration_ms=result.request_duration_ms,
         )
     except SarcasmEngineError as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc

@@ -12,7 +12,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const MAX_CHARS = 8000;
 
     const formatPercent = (value) => `${Math.round(Number(value) * 100)}%`;
-    const timestamp = () => new Intl.DateTimeFormat([], { hour: "2-digit", minute: "2-digit" }).format(new Date());
+    const timestamp = () => new Intl.DateTimeFormat([], {
+        hour: "2-digit",
+        minute: "2-digit"
+    }).format(new Date());
 
     function updateCounter() {
         const length = userInput.value.length;
@@ -38,40 +41,102 @@ document.addEventListener("DOMContentLoaded", () => {
         copy.className = "copy-btn";
         copy.textContent = "Copy";
         copy.addEventListener("click", async () => {
-            await navigator.clipboard.writeText(text);
-            copy.textContent = "Copied";
+            try {
+                await navigator.clipboard.writeText(text);
+                copy.textContent = "Copied";
+            } catch {
+                copy.textContent = "Copy failed";
+            }
             setTimeout(() => { copy.textContent = "Copy"; }, 1200);
         });
         meta.append(time, copy);
         msgDiv.appendChild(meta);
     }
 
-    function appendMessage(text, sender, scores = null) {
+    function createResultLine(label, score, isSarcastic, confidence) {
+        const line = document.createElement("div");
+        line.className = "result-line";
+
+        const labelEl = document.createElement("span");
+        labelEl.className = "result-label";
+        labelEl.textContent = label;
+
+        const valueEl = document.createElement("span");
+        valueEl.className = "result-value";
+        valueEl.textContent = `${formatPercent(score)} · ${isSarcastic ? "Sarcastic" : "Not sarcastic"} · ${confidence || "—"} confidence`;
+
+        line.append(labelEl, valueEl);
+        return line;
+    }
+
+    function sourceBadge(source) {
+        const normalized = (source || "Analyze only").toLowerCase();
+        const badge = document.createElement("span");
+        badge.className = "source-badge";
+        if (normalized.includes("gemini")) badge.classList.add("source-gemini");
+        else if (normalized.includes("fallback")) badge.classList.add("source-fallback");
+        else badge.classList.add("source-analysis");
+        badge.textContent = source || "Analyze only";
+        return badge;
+    }
+
+    function createScoreCard(scores) {
+        const scoreCard = document.createElement("div");
+        scoreCard.className = "score-card";
+
+        if (scores.user_sarcasm_score !== undefined) {
+            scoreCard.appendChild(createResultLine(
+                "Your text",
+                scores.user_sarcasm_score,
+                scores.user_is_sarcastic,
+                scores.user_confidence
+            ));
+        }
+
+        if (scores.user_explanation) {
+            const explanation = document.createElement("p");
+            explanation.className = "explanation";
+            explanation.textContent = scores.user_explanation;
+            scoreCard.appendChild(explanation);
+        }
+
+        if (scores.reply_sarcasm_score !== undefined) {
+            scoreCard.appendChild(createResultLine(
+                "Bot response",
+                scores.reply_sarcasm_score,
+                scores.reply_is_sarcastic,
+                scores.reply_confidence
+            ));
+        }
+
+        const sourceRow = document.createElement("div");
+        sourceRow.className = "source-row";
+        const sourceLabel = document.createElement("span");
+        sourceLabel.className = "result-label";
+        sourceLabel.textContent = "Response source";
+        sourceRow.append(sourceLabel, sourceBadge(scores.response_source));
+        scoreCard.appendChild(sourceRow);
+
+        const fallbackMessage = scores.fallback_message || scores.fallback_reason;
+        if (fallbackMessage) {
+            const fallback = document.createElement("p");
+            fallback.className = "fallback-note";
+            fallback.textContent = fallbackMessage;
+            scoreCard.appendChild(fallback);
+        }
+
+        return scoreCard;
+    }
+
+    function appendMessage(text, sender, scores = null, variant = "") {
         const msgDiv = document.createElement("div");
         msgDiv.className = `message ${sender === "user" ? "user-message" : "bot-message"}`;
         const bubble = document.createElement("div");
-        bubble.className = "bubble";
+        bubble.className = `bubble ${variant}`.trim();
         bubble.textContent = text;
         msgDiv.appendChild(bubble);
 
-        if (scores) {
-            const scoreCard = document.createElement("div");
-            scoreCard.className = "score-card";
-            const rows = [];
-            if (scores.user_sarcasm_score !== undefined) {
-                rows.push(`<span><b>Your result:</b> ${formatPercent(scores.user_sarcasm_score)} · ${scores.user_is_sarcastic ? "Sarcastic" : "Not sarcastic"} · ${scores.user_confidence || "—"} confidence</span>`);
-            }
-            if (scores.user_explanation) rows.push(`<span class="explanation">${scores.user_explanation}</span>`);
-            if (scores.reply_sarcasm_score !== undefined) {
-                rows.push(`<span><b>Bot reply:</b> ${formatPercent(scores.reply_sarcasm_score)} · ${scores.reply_is_sarcastic ? "Sarcastic" : "Not sarcastic"} · ${scores.reply_confidence || "—"} confidence</span>`);
-            }
-            if (scores.response_source) {
-                rows.push(`<span><b>Source:</b> ${scores.response_source}${scores.generation_attempts ? ` · ${scores.generation_attempts} attempt(s)` : ""}</span>`);
-            }
-            if (scores.fallback_reason) rows.push(`<span class="fallback-note"><b>Fallback reason:</b> ${scores.fallback_reason}</span>`);
-            scoreCard.innerHTML = rows.join("");
-            msgDiv.appendChild(scoreCard);
-        }
+        if (scores) msgDiv.appendChild(createScoreCard(scores));
 
         addMessageActions(msgDiv, text);
         chatBox.appendChild(msgDiv);
@@ -91,6 +156,16 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("active-typing-indicator")?.remove();
     }
 
+    function normalizeApiError(data, status) {
+        if (Array.isArray(data.detail)) {
+            return data.detail.map((item) => item.msg).filter(Boolean).join(" ") || "The request was not valid.";
+        }
+        if (typeof data.detail === "string") return data.detail;
+        if (status === 422) return "The message is empty or too long.";
+        if (status >= 500) return "The server could not complete the request. Check the backend log.";
+        return `Request failed (${status}).`;
+    }
+
     async function postJson(url, body) {
         let response;
         try {
@@ -103,7 +178,7 @@ document.addEventListener("DOMContentLoaded", () => {
             throw new Error("Cannot reach the FastAPI server.");
         }
         const data = await response.json().catch(() => ({}));
-        if (!response.ok) throw new Error(data.detail || `Request failed (${response.status}).`);
+        if (!response.ok) throw new Error(normalizeApiError(data, response.status));
         return data;
     }
 
@@ -124,6 +199,22 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    function updateGeminiRuntimeStatus(data) {
+        if (data.response_source === "Gemini") {
+            geminiStatus.textContent = "Active · Gemini";
+            geminiStatus.className = "status-ok";
+            return;
+        }
+        if (data.fallback_code === "quota_error") {
+            geminiStatus.textContent = "Quota unavailable · fallback active";
+        } else if (data.fallback_code === "authentication_error") {
+            geminiStatus.textContent = "API key problem · fallback active";
+        } else {
+            geminiStatus.textContent = "Fallback active";
+        }
+        geminiStatus.className = "status-warn";
+    }
+
     function getText() {
         const text = userInput.value.trim();
         if (!text) {
@@ -142,17 +233,18 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const data = await postJson("/analyze", { message: text });
             removeTypingIndicator();
-            appendMessage(`Analysis: ${data.label} (${formatPercent(data.score)}).`, "bot", {
+            appendMessage(`Analysis complete: ${data.label}.`, "bot", {
                 user_sarcasm_score: data.score,
                 user_is_sarcastic: data.is_sarcastic,
                 user_confidence: data.confidence,
-                user_explanation: data.explanation
+                user_explanation: data.explanation,
+                response_source: "Analyze only"
             });
             userInput.value = "";
             updateCounter();
         } catch (error) {
             removeTypingIndicator();
-            appendMessage(`Analyze error: ${error.message}`, "bot");
+            appendMessage(error.message, "bot", null, "error-bubble");
         } finally {
             setBusy(false);
             userInput.focus();
@@ -171,9 +263,10 @@ document.addEventListener("DOMContentLoaded", () => {
             const data = await postJson("/chat", { message: text });
             removeTypingIndicator();
             appendMessage(data.reply, "bot", data);
+            updateGeminiRuntimeStatus(data);
         } catch (error) {
             removeTypingIndicator();
-            appendMessage(`Chat error: ${error.message}`, "bot");
+            appendMessage(error.message, "bot", null, "error-bubble");
         } finally {
             setBusy(false);
             userInput.focus();
@@ -182,7 +275,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function resetChat() {
         chatBox.innerHTML = "";
-        appendMessage("Paste a tweet, article paragraph, headline, or message. I will estimate the sarcasm and can generate a reply.", "bot");
+        appendMessage(
+            "Paste a tweet, article paragraph, headline, or message. I will estimate the sarcasm and can generate a reply.",
+            "bot"
+        );
     }
 
     sendBtn.addEventListener("click", sendMessage);

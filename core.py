@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
+from logging.handlers import RotatingFileHandler
 import os
 import pickle
 import re
@@ -39,10 +40,24 @@ SARCASM_THRESHOLD = float(os.getenv("SARCASM_THRESHOLD", "0.5"))
 REPLY_MIN_SCORE = float(os.getenv("REPLY_MIN_SCORE", "0.65"))
 MAX_RETRIES = max(1, int(os.getenv("MAX_RETRIES", "3")))
 GEMINI_TIMEOUT_SECONDS = max(2.0, float(os.getenv("GEMINI_TIMEOUT_SECONDS", "20")))
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.6-flash")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "").strip()
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("sarcasm_bot")
+logger.setLevel(logging.INFO)
+LOGS_DIR = BASE_DIR / "logs"
+LOGS_DIR.mkdir(exist_ok=True)
+if not any(isinstance(handler, RotatingFileHandler) for handler in logger.handlers):
+    file_handler = RotatingFileHandler(
+        LOGS_DIR / "sarcasm_bot.log",
+        maxBytes=1_000_000,
+        backupCount=3,
+        encoding="utf-8",
+    )
+    file_handler.setFormatter(
+        logging.Formatter("%(asctime)s %(levelname)s %(message)s")
+    )
+    logger.addHandler(file_handler)
 
 
 @dataclass(frozen=True)
@@ -74,8 +89,12 @@ class ChatResult:
     reply_confidence: str
     user_explanation: str
     response_source: str
+    fallback_code: Optional[str]
+    fallback_message: Optional[str]
+    # Backward-compatible friendly alias. Never contains raw provider errors.
     fallback_reason: Optional[str]
     generation_attempts: int
+    request_duration_ms: int
 
 
 class SarcasmEngineError(RuntimeError):
@@ -91,25 +110,43 @@ def clean_text(text: str) -> str:
     return text
 
 
+def predicted_class_probability(
+    score_value: float, threshold: float = SARCASM_THRESHOLD
+) -> float:
+    """Return the probability assigned to the class selected by the threshold.
+
+    A score above the threshold predicts ``Sarcastic`` and uses the score itself.
+    A score below the threshold predicts ``Not sarcastic`` and uses ``1 - score``.
+    This keeps confidence bands symmetric on both sides of the decision boundary.
+    """
+    score_value = min(1.0, max(0.0, float(score_value)))
+    return score_value if score_value >= threshold else 1.0 - score_value
+
+
 def confidence_label(score_value: float, threshold: float = SARCASM_THRESHOLD) -> str:
-    """Describe confidence using distance from the classification threshold."""
-    distance = abs(float(score_value) - threshold)
-    if distance >= 0.35:
+    """Convert predicted-class probability into client-friendly confidence bands.
+
+    50-64% = Moderate, 65-79% = High, and 80-100% = Very high.
+    These labels describe model certainty around its own prediction, not real-world
+    accuracy or proof of the writer's intent.
+    """
+    class_probability = predicted_class_probability(score_value, threshold)
+    if class_probability >= 0.80:
+        return "Very high"
+    if class_probability >= 0.65:
         return "High"
-    if distance >= 0.18:
-        return "Moderate"
-    return "Low"
+    return "Moderate"
 
 
 def explain_score(score_value: float, is_sarcastic: bool) -> str:
     confidence = confidence_label(score_value)
     if is_sarcastic:
         return (
-            f"{confidence} confidence that the wording may be sarcastic. "
-            "This is a model estimate, not proof of the writer's intent."
+            f"{confidence} confidence that the model classifies the wording as sarcastic. "
+            "The score is an estimate and does not prove the writer's intent."
         )
     return (
-        f"{confidence} confidence that the wording appears more literal or sincere. "
+        f"{confidence} confidence that the model classifies the wording as more literal or sincere. "
         "Context can still change the intended meaning."
     )
 
@@ -208,7 +245,7 @@ def _load_model():
 
 def get_engine_status() -> dict:
     status = {
-        "version": "2.0.0-milestone-2",
+        "version": "2.2.0-milestone-2-pass-3",
         "model_file_exists": MODEL_PATH.exists(),
         "compat_model_file_exists": COMPAT_MODEL_PATH.exists(),
         "tokenizer_file_exists": TOKENIZER_PATH.exists(),
@@ -339,7 +376,25 @@ def _generate_with_gemini(prompt: str) -> GeminiResult:
         executor.shutdown(wait=False, cancel_futures=True)
 
 
+
+def friendly_fallback_message(error_code: Optional[str]) -> str:
+    """Return a short user-facing fallback message without provider diagnostics."""
+    messages = {
+        "not_configured": "Gemini is not configured. A local fallback response was used.",
+        "client_error": "Gemini could not be started. A local fallback response was used.",
+        "authentication_error": "Gemini authentication failed. Check the API key. A local fallback response was used.",
+        "quota_error": "Gemini quota is unavailable. A local fallback response was used.",
+        "timeout": "Gemini took too long to respond. A local fallback response was used.",
+        "empty_response": "Gemini returned no text. A local fallback response was used.",
+        "request_error": "Gemini is temporarily unavailable. A local fallback response was used.",
+    }
+    return messages.get(
+        error_code or "request_error",
+        "Gemini is unavailable. A local fallback response was used.",
+    )
+
 def respond(user_text: str) -> ChatResult:
+    started_at = time.perf_counter()
     user_analysis = analyze_text(user_text)
     prompt = build_prompt(user_text, user_analysis.score)
 
@@ -353,7 +408,18 @@ def respond(user_text: str) -> ChatResult:
         generated = _generate_with_gemini(prompt)
         if not generated.text:
             last_error = generated
-            if generated.error_code in {"not_configured", "authentication_error", "client_error"}:
+            logger.warning(
+                "Gemini attempt failed attempt=%s code=%s",
+                attempt,
+                generated.error_code or "unknown",
+            )
+            # These errors normally cannot be fixed by an immediate retry.
+            if generated.error_code in {
+                "not_configured",
+                "authentication_error",
+                "client_error",
+                "quota_error",
+            }:
                 break
             if attempt < MAX_RETRIES:
                 time.sleep(min(0.5 * attempt, 1.5))
@@ -366,8 +432,15 @@ def respond(user_text: str) -> ChatResult:
         if candidate_score >= REPLY_MIN_SCORE:
             break
 
+    duration_ms = round((time.perf_counter() - started_at) * 1000)
+
     if best_reply is not None:
         reply_analysis = analyze_text(best_reply)
+        logger.info(
+            "Chat completed source=gemini attempts=%s duration_ms=%s",
+            attempts,
+            duration_ms,
+        )
         return ChatResult(
             reply=best_reply,
             user_sarcasm_score=user_analysis.score,
@@ -378,13 +451,23 @@ def respond(user_text: str) -> ChatResult:
             reply_confidence=reply_analysis.confidence,
             user_explanation=user_analysis.explanation,
             response_source="Gemini",
+            fallback_code=None,
+            fallback_message=None,
             fallback_reason=None,
             generation_attempts=attempts,
+            request_duration_ms=duration_ms,
         )
 
     reply = _fallback_reply(user_text, user_analysis.score)
     reply_analysis = analyze_text(reply)
-    reason = last_error.error_message if last_error else "Gemini was unavailable."
+    fallback_code = last_error.error_code if last_error else "request_error"
+    fallback_message = friendly_fallback_message(fallback_code)
+    logger.warning(
+        "Chat completed source=local_fallback code=%s attempts=%s duration_ms=%s",
+        fallback_code,
+        attempts,
+        duration_ms,
+    )
     return ChatResult(
         reply=reply,
         user_sarcasm_score=user_analysis.score,
@@ -395,6 +478,10 @@ def respond(user_text: str) -> ChatResult:
         reply_confidence=reply_analysis.confidence,
         user_explanation=user_analysis.explanation,
         response_source="Local fallback",
-        fallback_reason=reason,
+        fallback_code=fallback_code,
+        fallback_message=fallback_message,
+        fallback_reason=fallback_message,
         generation_attempts=attempts,
+        request_duration_ms=duration_ms,
     )
+

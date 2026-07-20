@@ -1,0 +1,71 @@
+text,label,source
+Taxpayers rejoice as the simple online form expands to thirty pages.,1,hard_positive_validation
+The national library digitises thousands of historical photographs.,0,hard_negative_validation
+The prime minister visits flood-affected communities.,0,hard_negative_validation
+The transport agency begins repairs on the river bridge.,0,hard_negative_validation
+A regional hospital opens a new maternity ward.,0,hard_negative_validation
+The national rail operator changes weekend timetables.,0,hard_negative_validation
+Weather bureau delivers perfect timing by issuing the storm warning after the storm.,1,hard_positive_validation
+Residents celebrate a convenient six-hour power outage during the heatwave.,1,hard_positive_validation
+Residents welcome the exciting return of weekly water restrictions.,1,hard_positive_validation
+The government appoints a new ambassador to Japan.,0,hard_negative_validation
+A university launches a degree in renewable energy engineering.,0,hard_negative_validation
+Government solves the housing crisis by announcing another review.,1,hard_positive_validation
+Firefighters respond to a warehouse fire in the industrial district.,0,hard_negative_validation
+The central bank publishes minutes from its latest policy meeting.,0,hard_negative_validation
+University makes education affordable with a new administration surcharge.,1,hard_positive_validation
+Police reopen the road after completing a crash investigation.,0,hard_negative_validation
+City announces bold plan to fix potholes by studying them for another year.,1,hard_positive_validation
+Bank introduces an innovative fee for customers who avoid other fees.,1,hard_positive_validation
+The statistics agency reports slower population growth.,0,hard_negative_validation
+The new app is wonderfully simple once users complete the eighteen-step login.,1,hard_positive_validation
+Council protects local character by approving forty identical towers.,1,hard_positive_validation
+Council improves parking by removing half the available spaces.,1,hard_positive_validation
+Nation celebrates stable prices after groceries rise only nine percent.,1,hard_positive_validation
+A satellite captures new images of a tropical storm.,0,hard_negative_validation
+Government improves transparency by releasing the report with every page redacted.,1,hard_positive_validation
+Technology firm protects users by making the privacy policy impossible to read.,1,hard_positive_validation
+The national museum acquires a collection of historic maps.,0,hard_negative_validation
+The health ministry reports a decline in new influenza cases.,0,hard_negative_validation
+A public inquiry begins hearings into the building collapse.,0,hard_negative_validation
+The education department funds additional classrooms in growing suburbs.,0,hard_negative_validation
+A new passenger terminal opens at the regional airport.,0,hard_negative_validation
+Airport streamlines boarding by changing the procedure during boarding.,1,hard_positive_validation
+The agriculture department issues new biosecurity guidance.,0,hard_negative_validation
+Airline delights passengers with a surprise baggage fee at the gate.,1,hard_positive_validation
+Commuters applaud the inspired decision to cancel the first train of the day.,1,hard_positive_validation
+A new coastal monitoring station begins operations this month.,0,hard_negative_validation
+The weather bureau forecasts rain for the eastern states.,0,hard_negative_validation
+Commuters thrilled to hear the replacement bus is also delayed.,1,hard_positive_validation
+The unemployment rate remains unchanged at four percent.,0,hard_negative_validation
+The state opens applications for regional business grants.,0,hard_negative_validation
+Government reduces red tape by creating a department for red tape reduction.,1,hard_positive_validation
+Workers welcome a productivity system that requires four new daily meetings.,1,hard_positive_validation
+The local currency falls after weaker manufacturing data.,0,hard_negative_validation
+The national airline adds two weekly services to Singapore.,0,hard_negative_validation
+The port authority approves an expansion of the cargo terminal.,0,hard_negative_validation
+A freight train derails outside the city with no serious injuries reported.,0,hard_negative_validation
+Officials proudly confirm the delayed project is still delayed.,1,hard_positive_validation
+The government signs a renewable energy agreement with three states.,0,hard_negative_validation
+Residents enjoy peaceful night as construction begins at two in the morning.,1,hard_positive_validation
+A medical trial begins recruiting participants next week.,0,hard_negative_validation
+Drivers welcome another toll increase on the road already under repair.,1,hard_positive_validation
+Company listens to customers by disabling the feedback form.,1,hard_positive_validation
+Parents thrilled as school holiday traffic begins two weeks early.,1,hard_positive_validation
+Public transport wins reliability award after cancelling unreliable services.,1,hard_positive_validation
+Emergency crews contain a grass fire near the western highway.,0,hard_negative_validation
+The federal court hears arguments in the environmental case.,0,hard_negative_validation
+The city introduces additional recycling collections.,0,hard_negative_validation
+Retailers celebrate record sales after prices double.,1,hard_positive_validation
+The national football team names its squad for the qualifying match.,0,hard_negative_validation
+Bank makes saving easier by lowering interest and raising fees.,1,hard_positive_validation
+The council votes to expand the community sports centre.,0,hard_negative_validation
+Hospital shortens queues by asking patients to arrive even earlier.,1,hard_positive_validation
+Parliament approves changes to the national disability program.,0,hard_negative_validation
+The reserve bank leaves the official cash rate at its current level.,0,hard_negative_validation
+Hospitals introduce online appointment reminders for patients.,0,hard_negative_validation
+Scientists publish a study on coral reef recovery.,0,hard_negative_validation
+Company boosts morale by replacing bonuses with motivational emails.,1,hard_positive_validation
+Consumer confidence rises slightly in the latest monthly survey.,0,hard_negative_validation
+The opposition announces its health policy before the election.,0,hard_negative_validation
+The weather service records the coldest July morning in a decade.,0,hard_negative_validation

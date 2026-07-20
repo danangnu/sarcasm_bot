@@ -1,0 +1,160 @@
+{
+  "model_version": "headline-bilstm-2.0-hard-negative-calibrated",
+  "created_at_utc": "2026-07-22T23:15:59.084663+00:00",
+  "model_type": "Regularized Bidirectional LSTM",
+  "task": "binary sarcasm classification for English news headlines",
+  "dataset_file": "Sarcasm_Headlines_Dataset_v2.json",
+  "dataset_rows_after_cleaning": 28477,
+  "hard_example_counts": {
+    "train": 560,
+    "validation": 70,
+    "real_world_gate": 50
+  },
+  "split": {
+    "base_train": 19933,
+    "base_validation": 4272,
+    "base_test": 4272
+  },
+  "label_mapping": {
+    "0": "not_sarcastic",
+    "1": "sarcastic"
+  },
+  "sequence_length": 40,
+  "vocab_size_limit": 22000,
+  "effective_vocab_size": 22000,
+  "oov_token": "<OOV>",
+  "padding": "post",
+  "truncating": "post",
+  "threshold": 0.44,
+  "threshold_selection": {
+    "selection_metric": "combined_base_and_hard_validation",
+    "constraints_satisfied": false,
+    "threshold": 0.44,
+    "objective": 0.8484626789055261,
+    "base_f1": 0.8571428571428571,
+    "base_balanced_accuracy": 0.8613610135752491,
+    "hard_balanced_accuracy": 0.8333333333333333,
+    "hard_specificity": 1.0,
+    "hard_recall": 0.6666666666666666
+  },
+  "probability_calibration": {
+    "method": "Platt scaling on validation predictions",
+    "slope": 1.0023316543629452,
+    "intercept": -0.12091169683087458
+  },
+  "minimum_context_tokens": 4,
+  "test_metrics": {
+    "threshold": 0.44,
+    "accuracy": 0.8597846441947565,
+    "balanced_accuracy": 0.8608720954628267,
+    "precision": 0.8322520852641334,
+    "recall": 0.8834235120511559,
+    "f1": 0.8570746838463373,
+    "specificity": 0.8383206788744976,
+    "roc_auc": 0.9335266890412701,
+    "average_precision": 0.9277562950247904,
+    "confusion_matrix": [
+      [
+        1877,
+        362
+      ],
+      [
+        237,
+        1796
+      ]
+    ],
+    "classification_report": {
+      "not_sarcastic": {
+        "precision": 0.8878902554399243,
+        "recall": 0.8383206788744976,
+        "f1-score": 0.8623937514357914,
+        "support": 2239.0
+      },
+      "sarcastic": {
+        "precision": 0.8322520852641334,
+        "recall": 0.8834235120511559,
+        "f1-score": 0.8570746838463373,
+        "support": 2033.0
+      },
+      "accuracy": 0.8597846441947565,
+      "macro avg": {
+        "precision": 0.8600711703520288,
+        "recall": 0.8608720954628267,
+        "f1-score": 0.8597342176410644,
+        "support": 4272.0
+      },
+      "weighted avg": {
+        "precision": 0.8614126337247129,
+        "recall": 0.8597846441947565,
+        "f1-score": 0.8598624629504544,
+        "support": 4272.0
+      }
+    }
+  },
+  "real_world_gate_metrics": {
+    "threshold": 0.44,
+    "accuracy": 0.94,
+    "balanced_accuracy": 0.925,
+    "precision": 1.0,
+    "recall": 0.85,
+    "f1": 0.918918918918919,
+    "specificity": 1.0,
+    "roc_auc": 0.9833333333333334,
+    "average_precision": 0.9781818181818183,
+    "confusion_matrix": [
+      [
+        30,
+        0
+      ],
+      [
+        3,
+        17
+      ]
+    ],
+    "classification_report": {
+      "not_sarcastic": {
+        "precision": 0.9090909090909091,
+        "recall": 1.0,
+        "f1-score": 0.9523809523809523,
+        "support": 30.0
+      },
+      "sarcastic": {
+        "precision": 1.0,
+        "recall": 0.85,
+        "f1-score": 0.918918918918919,
+        "support": 20.0
+      },
+      "accuracy": 0.94,
+      "macro avg": {
+        "precision": 0.9545454545454546,
+        "recall": 0.925,
+        "f1-score": 0.9356499356499357,
+        "support": 50.0
+      },
+      "weighted avg": {
+        "precision": 0.9454545454545454,
+        "recall": 0.94,
+        "f1-score": 0.938996138996139,
+        "support": 50.0
+      }
+    }
+  },
+  "promotion_gate": {
+    "passed": true,
+    "criteria": {
+      "test_accuracy_at_least_0_84": true,
+      "test_f1_at_least_0_84": true,
+      "test_roc_auc_at_least_0_90": true,
+      "gate_accuracy_at_least_0_84": true,
+      "gate_specificity_at_least_0_85": true,
+      "gate_recall_at_least_0_80": true
+    }
+  },
+  "limitations": [
+    "The score estimates learned linguistic patterns and does not prove author intent.",
+    "The hard examples are controlled augmentation, not an independent benchmark.",
+    "The real-world gate is a small curated check and does not replace external validation.",
+    "Movie and song titles may contain too little context for reliable classification.",
+    "Article paragraphs and social-media messages require separate validation."
+  ]
+}

@@ -1,0 +1,561 @@
+text,label,source
+Officials proudly announce another three-hour delay on the morning commute.,1,hard_positive
+The international terminal introduces new security screening equipment.,0,hard_negative
+The stock market raises its economic growth forecast.,0,hard_negative
+The education department approves funding for a new public hospital.,0,hard_negative
+The city bus network remains closed after a landslide.,0,hard_negative
+Residents welcome record rent increases across every major city.,1,hard_positive
+Scientists are stunned to learn a transport project delayed for only the sixth time.,1,hard_positive
+Government unveils a budget saving achieved by cutting the most popular program.,1,hard_positive
+Government unveils another three-hour delay on the morning commute.,1,hard_positive
+The environmental agency maps changes in the national coastline.,0,hard_negative
+The city bus network closes overnight for safety inspections.,0,hard_negative
+Residents welcome the discovery that water remains wet.,1,hard_positive
+The environmental agency begins a study of coastal erosion.,0,hard_negative
+The stock market records modest gains in early trading.,0,hard_negative
+Astronomers publishes new climate monitoring data.,0,hard_negative
+Retail sales reports a fall in annual inflation.,0,hard_negative
+Consumer prices records modest gains in early trading.,0,hard_negative
+Strong winds delays flights at major airports.,0,hard_negative
+Dense fog forces schools and offices to close.,0,hard_negative
+The finance ministry falls to its lowest level in two years.,0,hard_negative
+Commuters are thrilled by another software update that breaks the login page.,1,hard_positive
+The medical regulator extend opening hours during winter.,0,hard_negative
+A bushfire prompts emergency warnings for residents.,0,hard_negative
+The national space agency publishes new climate monitoring data.,0,hard_negative
+The health department releases findings from a five-year study.,0,hard_negative
+The government publishes updated electricity market rules.,0,hard_negative
+Researchers launches a new weather observation satellite.,0,hard_negative
+Astronomers discovers evidence of water beneath the surface.,0,hard_negative
+NASA maps changes in the national coastline.,0,hard_negative
+The stock market remain steady during the holiday period.,0,hard_negative
+The medical regulator begin using a new patient booking system.,0,hard_negative
+A heatwave leads authorities to open evacuation centres.,0,hard_negative
+A university team launches a new weather observation satellite.,0,hard_negative
+Retail sales releases the annual budget update.,0,hard_negative
+A research institute extend opening hours during winter.,0,hard_negative
+The new metro station receives funding for capacity upgrades.,0,hard_negative
+The national statistics office remain steady during the holiday period.,0,hard_negative
+Public hospitals report an increase in seasonal flu cases.,0,hard_negative
+The national university resume classes after the summer break.,0,hard_negative
+The coastal road returns to its regular timetable.,0,hard_negative
+A bushfire moves toward the coast overnight.,0,hard_negative
+Drivers celebrate a transport project delayed for only the sixth time.,1,hard_positive
+A university team announces a trial of renewable energy storage.,0,hard_negative
+Coastal flooding forces schools and offices to close.,0,hard_negative
+The harbour bridge remains closed after a landslide.,0,hard_negative
+Residents welcome a public consultation held after the decision was already made.,1,hard_positive
+The finance ministry remain steady during the holiday period.,0,hard_negative
+Workers rejoice as a transport project delayed for only the sixth time.,1,hard_positive
+Community clinics respond to hundreds of calls after the storm.,0,hard_negative
+A cold front disrupts transport services in the region.,0,hard_negative
+The public health agency resume classes after the summer break.,0,hard_negative
+Government unveils a transport project delayed for only the sixth time.,1,hard_positive
+Local schools receives funding for cancer research.,0,hard_negative
+The energy market operator forecast higher electricity demand during the heatwave.,0,hard_negative
+Parliament releases a plan for disaster recovery.,0,hard_negative
+The public health agency begin using a new patient booking system.,0,hard_negative
+Taxpayers welcome a bold strategy to postpone the decision until next year.,1,hard_positive
+Residents welcome the fourth electricity price increase this year.,1,hard_positive
+The national statistics office closes slightly higher against the dollar.,0,hard_negative
+The geological survey announces a trial of renewable energy storage.,0,hard_negative
+Parliament offers assistance to drought-affected farmers.,0,hard_negative
+The geological survey discovers evidence of water beneath the surface.,0,hard_negative
+The unemployment rate falls to its lowest level in two years.,0,hard_negative
+The national university approves a new treatment for clinical use.,0,hard_negative
+A tropical cyclone damages homes and public infrastructure.,0,hard_negative
+Community clinics resume classes after the summer break.,0,hard_negative
+The city bus network resumes operations after severe weather.,0,hard_negative
+Drivers celebrate another software update that breaks the login page.,1,hard_positive
+Government unveils another software update that breaks the login page.,1,hard_positive
+Doctors updates guidance for respiratory illness.,0,hard_negative
+Coastal flooding leads authorities to open evacuation centres.,0,hard_negative
+University reduces student costs by introducing a fee for paying fees.,1,hard_positive
+Nation relieved as leaders agree to continue discussing whether to hold a meeting.,1,hard_positive
+Taxpayers welcome a transport project delayed for only the sixth time.,1,hard_positive
+The northern freight route receives funding for capacity upgrades.,0,hard_negative
+The national statistics office falls to its lowest level in two years.,0,hard_negative
+The harbour bridge adds extra services for the holiday weekend.,0,hard_negative
+The education board respond to hundreds of calls after the storm.,0,hard_negative
+Commuters are thrilled by a revolutionary plan to schedule another meeting.,1,hard_positive
+A research institute report an increase in seasonal flu cases.,0,hard_negative
+Residents enjoy the convenience of a planned power outage with no announced schedule.,1,hard_positive
+Officials proudly announce a new service fee for using the existing service.,1,hard_positive
+The international terminal adds extra services for the holiday weekend.,0,hard_negative
+The election commission passes a housing affordability package.,0,hard_negative
+The city council announces additional support for public schools.,0,hard_negative
+The housing market raises its economic growth forecast.,0,hard_negative
+A university team detects a distant planet around a nearby star.,0,hard_negative
+The northern freight route closes overnight for safety inspections.,0,hard_negative
+The national cabinet passes a housing affordability package.,0,hard_negative
+The public health agency receives funding for cancer research.,0,hard_negative
+Consumer prices releases the annual budget update.,0,hard_negative
+The ferry service opens to passengers on Monday.,0,hard_negative
+Residents welcome an exciting new opportunity to pay higher taxes.,1,hard_positive
+The main rail line returns to its regular timetable.,0,hard_negative
+The central bank falls to its lowest level in two years.,0,hard_negative
+Local family thrilled to spend the weekend repairing damage from the storm.,1,hard_positive
+The regional airport closes overnight for safety inspections.,0,hard_negative
+The finance ministry releases the annual budget update.,0,hard_negative
+A research institute begin using a new patient booking system.,0,hard_negative
+NASA opens a new research laboratory.,0,hard_negative
+Nation celebrates a bold strategy to postpone the decision until next year.,1,hard_positive
+Commuters are thrilled by a bold strategy to postpone the decision until next year.,1,hard_positive
+Public hospitals respond to hundreds of calls after the storm.,0,hard_negative
+The medical regulator respond to hundreds of calls after the storm.,0,hard_negative
+Community clinics begin using a new patient booking system.,0,hard_negative
+The election commission releases a plan for disaster recovery.,0,hard_negative
+The city bus network adds extra services for the holiday weekend.,0,hard_negative
+The local currency reports a fall in annual inflation.,0,hard_negative
+The central bank raises its economic growth forecast.,0,hard_negative
+Astronomers launches a new weather observation satellite.,0,hard_negative
+The education board updates guidance for respiratory illness.,0,hard_negative
+A heatwave prompts emergency warnings for residents.,0,hard_negative
+The regional airport opens to passengers on Monday.,0,hard_negative
+Nation celebrates a helpful new form requiring twelve additional forms.,1,hard_positive
+The treasury keeps interest rates unchanged.,0,hard_negative
+A tropical cyclone cuts power to thousands of households.,0,hard_negative
+A major highway introduces new security screening equipment.,0,hard_negative
+A university team publishes new climate monitoring data.,0,hard_negative
+The medical regulator receives funding for cancer research.,0,hard_negative
+Retail sales falls to its lowest level in two years.,0,hard_negative
+The main rail line undergoes repairs during the next month.,0,hard_negative
+The geological survey maps changes in the national coastline.,0,hard_negative
+Parents are delighted by a fuel price rise just in time for the holiday weekend.,1,hard_positive
+A bushfire forces schools and offices to close.,0,hard_negative
+Record snowfall forces schools and offices to close.,0,hard_negative
+A major highway closes overnight for safety inspections.,0,hard_negative
+The education board report an increase in seasonal flu cases.,0,hard_negative
+An earthquake delays flights at major airports.,0,hard_negative
+City solves traffic congestion by closing the only road into town.,1,hard_positive
+The transport authority passes a housing affordability package.,0,hard_negative
+The city bus network introduces new security screening equipment.,0,hard_negative
+Workers rejoice as record rent increases across every major city.,1,hard_positive
+Government unveils a fuel price rise just in time for the holiday weekend.,1,hard_positive
+The stock market closes slightly higher against the dollar.,0,hard_negative
+A severe thunderstorm causes flooding across northern communities.,0,hard_negative
+The medical regulator announces scholarships for rural students.,0,hard_negative
+The weather bureau releases findings from a five-year study.,0,hard_negative
+The main rail line resumes operations after severe weather.,0,hard_negative
+The health department discovers evidence of water beneath the surface.,0,hard_negative
+Retail sales raises its economic growth forecast.,0,hard_negative
+The environmental agency detects a distant planet around a nearby star.,0,hard_negative
+The unemployment rate remain steady during the holiday period.,0,hard_negative
+Parents are delighted by an exciting new opportunity to pay higher taxes.,1,hard_positive
+The housing market falls to its lowest level in two years.,0,hard_negative
+Scientists are stunned to learn a website upgrade that removes the features people use.,1,hard_positive
+Drivers celebrate the discovery that water remains wet.,1,hard_positive
+Parliament sets the date for the national election.,0,hard_negative
+The national space agency releases findings from a five-year study.,0,hard_negative
+Drivers celebrate the fourth electricity price increase this year.,1,hard_positive
+The coastal road introduces new security screening equipment.,0,hard_negative
+Taxpayers welcome another three-hour delay on the morning commute.,1,hard_positive
+Researchers announces a trial of renewable energy storage.,0,hard_negative
+The agriculture department approves funding for a new public hospital.,0,hard_negative
+Scientists opens a new research laboratory.,0,hard_negative
+A landslide prompts emergency warnings for residents.,0,hard_negative
+The treasury reports a fall in annual inflation.,0,hard_negative
+The transport authority announces additional support for public schools.,0,hard_negative
+Public hospitals publishes revised curriculum standards.,0,hard_negative
+The education board receives funding for cancer research.,0,hard_negative
+The economy is clearly thriving because groceries now cost twice as much.,1,hard_positive
+A cold front delays flights at major airports.,0,hard_negative
+Parents are delighted by a budget saving achieved by cutting the most popular program.,1,hard_positive
+Researchers tests a new medical imaging system.,0,hard_negative
+Drivers celebrate a budget saving achieved by cutting the most popular program.,1,hard_positive
+A passenger train was delayed after a signal fault near the central station.,0,hard_negative
+Officials proudly announce the discovery that water remains wet.,1,hard_positive
+A severe thunderstorm leads authorities to open evacuation centres.,0,hard_negative
+Astronomers detects a distant planet around a nearby star.,0,hard_negative
+Workers rejoice as the fourth electricity price increase this year.,1,hard_positive
+Taxpayers welcome an exciting new opportunity to pay higher taxes.,1,hard_positive
+The health ministry announces additional support for public schools.,0,hard_negative
+The energy regulator passes a housing affordability package.,0,hard_negative
+Airline makes travel easier by changing the departure gate five times.,1,hard_positive
+NASA begins a study of coastal erosion.,0,hard_negative
+The coastal road receives funding for capacity upgrades.,0,hard_negative
+Parents are delighted by a helpful new form requiring twelve additional forms.,1,hard_positive
+Weather service promises perfect conditions immediately before a week of storms.,1,hard_positive
+Scientists are stunned to learn record rent increases across every major city.,1,hard_positive
+Government unveils a bold strategy to postpone the decision until next year.,1,hard_positive
+The finance ministry keeps interest rates unchanged.,0,hard_negative
+Nation celebrates another three-hour delay on the morning commute.,1,hard_positive
+The health ministry releases a plan for disaster recovery.,0,hard_negative
+Local schools announces scholarships for rural students.,0,hard_negative
+The national space agency discovers evidence of water beneath the surface.,0,hard_negative
+The international terminal opens to passengers on Monday.,0,hard_negative
+The geological survey releases findings from a five-year study.,0,hard_negative
+The stock market releases the annual budget update.,0,hard_negative
+The education department releases a plan for disaster recovery.,0,hard_negative
+Workers rejoice as a public consultation held after the decision was already made.,1,hard_positive
+Strong winds cuts power to thousands of households.,0,hard_negative
+The transport authority adopts a new waste management policy.,0,hard_negative
+Workers rejoice as an exciting new opportunity to pay higher taxes.,1,hard_positive
+Emergency services receives funding for cancer research.,0,hard_negative
+A heatwave damages homes and public infrastructure.,0,hard_negative
+Record snowfall cuts power to thousands of households.,0,hard_negative
+The harbour bridge closes overnight for safety inspections.,0,hard_negative
+The regional airport returns to its regular timetable.,0,hard_negative
+The education department publishes updated electricity market rules.,0,hard_negative
+Residents welcome a budget saving achieved by cutting the most popular program.,1,hard_positive
+The public health agency extend opening hours during winter.,0,hard_negative
+A cold front moves toward the coast overnight.,0,hard_negative
+The education department confirms upgrades to the national rail network.,0,hard_negative
+Nation celebrates a revolutionary plan to schedule another meeting.,1,hard_positive
+Commuters are thrilled by a website upgrade that removes the features people use.,1,hard_positive
+The finance ministry records modest gains in early trading.,0,hard_negative
+Dense fog cuts power to thousands of households.,0,hard_negative
+The national statistics office reports a fall in annual inflation.,0,hard_negative
+The coastal road closes overnight for safety inspections.,0,hard_negative
+Workers rejoice as a budget saving achieved by cutting the most popular program.,1,hard_positive
+Officials proudly announce a website upgrade that removes the features people use.,1,hard_positive
+Local schools updates guidance for respiratory illness.,0,hard_negative
+The regional airport undergoes repairs during the next month.,0,hard_negative
+Government unveils the fourth electricity price increase this year.,1,hard_positive
+The central bank reports a fall in annual inflation.,0,hard_negative
+Emergency services approves a new treatment for clinical use.,0,hard_negative
+Nation celebrates a public consultation held after the decision was already made.,1,hard_positive
+Taxpayers welcome a new service fee for using the existing service.,1,hard_positive
+A research institute approves a new treatment for clinical use.,0,hard_negative
+Astronomers opens a new research laboratory.,0,hard_negative
+The election commission sets the date for the national election.,0,hard_negative
+The education department adopts a new waste management policy.,0,hard_negative
+Retail sales shows slower growth in major cities.,0,hard_negative
+Scientists are stunned to learn a new service fee for using the existing service.,1,hard_positive
+The health ministry sets the date for the national election.,0,hard_negative
+Strong winds causes flooding across northern communities.,0,hard_negative
+The agriculture department offers assistance to drought-affected farmers.,0,hard_negative
+The national university extend opening hours during winter.,0,hard_negative
+The energy regulator releases a plan for disaster recovery.,0,hard_negative
+Heavy rainfall prompts emergency warnings for residents.,0,hard_negative
+The government released updated population estimates for every state and territory.,0,hard_negative
+The government adopts a new waste management policy.,0,hard_negative
+Researchers maps changes in the national coastline.,0,hard_negative
+The agriculture ministry expects wheat production to rise after improved rainfall.,0,hard_negative
+Local schools publishes revised curriculum standards.,0,hard_negative
+The central bank remain steady during the holiday period.,0,hard_negative
+The international terminal returns to its regular timetable.,0,hard_negative
+A bushfire cuts power to thousands of households.,0,hard_negative
+Local schools extend opening hours during winter.,0,hard_negative
+Scientists publishes new climate monitoring data.,0,hard_negative
+Officials proudly announce a bold strategy to postpone the decision until next year.,1,hard_positive
+The environmental agency opens a new research laboratory.,0,hard_negative
+Record snowfall damages homes and public infrastructure.,0,hard_negative
+An earthquake disrupts transport services in the region.,0,hard_negative
+Dense fog disrupts transport services in the region.,0,hard_negative
+The foreign minister arrived in Tokyo for two days of regional security talks.,0,hard_negative
+NASA detects a distant planet around a nearby star.,0,hard_negative
+The main rail line closes overnight for safety inspections.,0,hard_negative
+The central bank releases the annual budget update.,0,hard_negative
+NASA publishes new climate monitoring data.,0,hard_negative
+Nation celebrates a transport project delayed for only the sixth time.,1,hard_positive
+The education board begin using a new patient booking system.,0,hard_negative
+The health ministry opens three regional vaccination centres.,0,hard_negative
+The energy regulator adopts a new waste management policy.,0,hard_negative
+Consumer prices raises its economic growth forecast.,0,hard_negative
+The ferry service receives funding for capacity upgrades.,0,hard_negative
+Workers rejoice as a bold strategy to postpone the decision until next year.,1,hard_positive
+The energy regulator sets the date for the national election.,0,hard_negative
+A cold front weakens after crossing the shoreline.,0,hard_negative
+The national weather service issued a warning for damaging winds and heavy rain.,0,hard_negative
+A heatwave delays flights at major airports.,0,hard_negative
+A tropical cyclone leads authorities to open evacuation centres.,0,hard_negative
+Workers rejoice as another three-hour delay on the morning commute.,1,hard_positive
+Local schools report an increase in seasonal flu cases.,0,hard_negative
+Parents are delighted by a website upgrade that removes the features people use.,1,hard_positive
+The opposition released its costings before the final week of the election campaign.,0,hard_negative
+The unemployment rate increase during the latest quarter.,0,hard_negative
+Commuters are thrilled by a budget saving achieved by cutting the most popular program.,1,hard_positive
+Heavy rainfall leads authorities to open evacuation centres.,0,hard_negative
+Record snowfall moves toward the coast overnight.,0,hard_negative
+The ferry service closes overnight for safety inspections.,0,hard_negative
+The national cabinet offers assistance to drought-affected farmers.,0,hard_negative
+The health department publishes new climate monitoring data.,0,hard_negative
+The main rail line reopens after scheduled maintenance.,0,hard_negative
+The airline added direct flights between the two capitals for the summer schedule.,0,hard_negative
+Workers rejoice as a revolutionary plan to schedule another meeting.,1,hard_positive
+Residents welcome a transport project delayed for only the sixth time.,1,hard_positive
+Officials proudly announce a fuel price rise just in time for the holiday weekend.,1,hard_positive
+Coastal flooding moves toward the coast overnight.,0,hard_negative
+The national university publishes revised curriculum standards.,0,hard_negative
+Council protects green space by approving a car park on top of it.,1,hard_positive
+Government unveils an exciting new opportunity to pay higher taxes.,1,hard_positive
+The ferry service introduces new security screening equipment.,0,hard_negative
+The main rail line opens to passengers on Monday.,0,hard_negative
+Coastal flooding delays flights at major airports.,0,hard_negative
+The education board publishes revised curriculum standards.,0,hard_negative
+The energy regulator offers assistance to drought-affected farmers.,0,hard_negative
+Scientists are stunned to learn another three-hour delay on the morning commute.,1,hard_positive
+The unemployment rate releases the annual budget update.,0,hard_negative
+Drivers celebrate a fuel price rise just in time for the holiday weekend.,1,hard_positive
+The treasury records modest gains in early trading.,0,hard_negative
+Dense fog moves toward the coast overnight.,0,hard_negative
+Researchers opens a new research laboratory.,0,hard_negative
+Heavy rainfall moves toward the coast overnight.,0,hard_negative
+The city council opens three regional vaccination centres.,0,hard_negative
+A parliamentary committee will hold public hearings on the proposed legislation.,0,hard_negative
+The election commission approves funding for a new public hospital.,0,hard_negative
+Scientists are stunned to learn a fuel price rise just in time for the holiday weekend.,1,hard_positive
+Taxpayers welcome a website upgrade that removes the features people use.,1,hard_positive
+The agriculture department opens three regional vaccination centres.,0,hard_negative
+Drivers celebrate a public consultation held after the decision was already made.,1,hard_positive
+Scientists maps changes in the national coastline.,0,hard_negative
+Workers rejoice as a new service fee for using the existing service.,1,hard_positive
+The central bank records modest gains in early trading.,0,hard_negative
+The national cabinet approves funding for a new public hospital.,0,hard_negative
+A research institute respond to hundreds of calls after the storm.,0,hard_negative
+The main rail line adds extra services for the holiday weekend.,0,hard_negative
+The city council adopts a new waste management policy.,0,hard_negative
+Scientists are stunned to learn a budget saving achieved by cutting the most popular program.,1,hard_positive
+Dense fog weakens after crossing the shoreline.,0,hard_negative
+A cold front prompts emergency warnings for residents.,0,hard_negative
+Parents are delighted by a revolutionary plan to schedule another meeting.,1,hard_positive
+Drivers celebrate an exciting new opportunity to pay higher taxes.,1,hard_positive
+The housing market records modest gains in early trading.,0,hard_negative
+The main rail line introduces new security screening equipment.,0,hard_negative
+The health department opens a new research laboratory.,0,hard_negative
+The transport authority publishes updated electricity market rules.,0,hard_negative
+The stock market keeps interest rates unchanged.,0,hard_negative
+The regional airport reopens after scheduled maintenance.,0,hard_negative
+Community clinics approves a new treatment for clinical use.,0,hard_negative
+Parliament confirms upgrades to the national rail network.,0,hard_negative
+Nation celebrates a new service fee for using the existing service.,1,hard_positive
+The geological survey opens a new research laboratory.,0,hard_negative
+Parents are delighted by a public consultation held after the decision was already made.,1,hard_positive
+A severe thunderstorm delays flights at major airports.,0,hard_negative
+The coastal road undergoes repairs during the next month.,0,hard_negative
+The weather bureau begins a study of coastal erosion.,0,hard_negative
+The government sets the date for the national election.,0,hard_negative
+The regional airport resumes operations after severe weather.,0,hard_negative
+Nation celebrates the discovery that water remains wet.,1,hard_positive
+Doctors receives funding for cancer research.,0,hard_negative
+"Brilliant, the airport has cancelled every flight on the busiest day of the year.",1,hard_positive
+"What a wonderful surprise, the application crashed during the live demonstration.",1,hard_positive
+Emergency services updates guidance for respiratory illness.,0,hard_negative
+Community clinics receives funding for cancer research.,0,hard_negative
+The education board approves a new treatment for clinical use.,0,hard_negative
+A landslide delays flights at major airports.,0,hard_negative
+Record snowfall disrupts transport services in the region.,0,hard_negative
+Scientists are stunned to learn a revolutionary plan to schedule another meeting.,1,hard_positive
+Local schools respond to hundreds of calls after the storm.,0,hard_negative
+The coastal road adds extra services for the holiday weekend.,0,hard_negative
+Nation celebrates a website upgrade that removes the features people use.,1,hard_positive
+The national university respond to hundreds of calls after the storm.,0,hard_negative
+Doctors approves a new treatment for clinical use.,0,hard_negative
+Commuters are thrilled by an exciting new opportunity to pay higher taxes.,1,hard_positive
+Doctors respond to hundreds of calls after the storm.,0,hard_negative
+The treasury releases the annual budget update.,0,hard_negative
+The national space agency launches a new weather observation satellite.,0,hard_negative
+The health ministry offers assistance to drought-affected farmers.,0,hard_negative
+Heavy rainfall disrupts transport services in the region.,0,hard_negative
+The geological survey detects a distant planet around a nearby star.,0,hard_negative
+The prime minister met state leaders to discuss national infrastructure funding.,0,hard_negative
+The local currency shows slower growth in major cities.,0,hard_negative
+The new metro station remains closed after a landslide.,0,hard_negative
+The city council passes a housing affordability package.,0,hard_negative
+Taxpayers welcome record rent increases across every major city.,1,hard_positive
+The housing market closes slightly higher against the dollar.,0,hard_negative
+A major highway resumes operations after severe weather.,0,hard_negative
+Scientists are stunned to learn an exciting new opportunity to pay higher taxes.,1,hard_positive
+Taxpayers welcome a revolutionary plan to schedule another meeting.,1,hard_positive
+The harbour bridge receives funding for capacity upgrades.,0,hard_negative
+The geological survey begins a study of coastal erosion.,0,hard_negative
+Officials proudly announce a budget saving achieved by cutting the most popular program.,1,hard_positive
+The education department passes a housing affordability package.,0,hard_negative
+The unemployment rate keeps interest rates unchanged.,0,hard_negative
+Drivers celebrate record rent increases across every major city.,1,hard_positive
+The medical regulator publishes revised curriculum standards.,0,hard_negative
+Scientists discovers evidence of water beneath the surface.,0,hard_negative
+Nation celebrates another software update that breaks the login page.,1,hard_positive
+The regional airport remains closed after a landslide.,0,hard_negative
+An earthquake forces schools and offices to close.,0,hard_negative
+Commuters are thrilled by another three-hour delay on the morning commute.,1,hard_positive
+The education department announces additional support for public schools.,0,hard_negative
+Astronomers releases findings from a five-year study.,0,hard_negative
+The city council publishes updated electricity market rules.,0,hard_negative
+A landslide moves toward the coast overnight.,0,hard_negative
+The agriculture department adopts a new waste management policy.,0,hard_negative
+Dense fog prompts emergency warnings for residents.,0,hard_negative
+Researchers detects a distant planet around a nearby star.,0,hard_negative
+Officials proudly announce the fourth electricity price increase this year.,1,hard_positive
+The national cabinet sets the date for the national election.,0,hard_negative
+NASA announces a trial of renewable energy storage.,0,hard_negative
+Company improves customer service by removing every way to contact a person.,1,hard_positive
+Scientists announces a trial of renewable energy storage.,0,hard_negative
+The housing market keeps interest rates unchanged.,0,hard_negative
+Commuters are thrilled by a new service fee for using the existing service.,1,hard_positive
+A university team tests a new medical imaging system.,0,hard_negative
+The election commission opens three regional vaccination centres.,0,hard_negative
+Commuters are thrilled by the fourth electricity price increase this year.,1,hard_positive
+Parliament passes a housing affordability package.,0,hard_negative
+The national statistics office increase during the latest quarter.,0,hard_negative
+A severe thunderstorm forces schools and offices to close.,0,hard_negative
+Emergency services respond to hundreds of calls after the storm.,0,hard_negative
+Retail sales increase during the latest quarter.,0,hard_negative
+The health ministry publishes updated electricity market rules.,0,hard_negative
+The unemployment rate raises its economic growth forecast.,0,hard_negative
+Government unveils a public consultation held after the decision was already made.,1,hard_positive
+Nation celebrates a fuel price rise just in time for the holiday weekend.,1,hard_positive
+Heavy rainfall delays flights at major airports.,0,hard_negative
+The city council releases a plan for disaster recovery.,0,hard_negative
+The unemployment rate closes slightly higher against the dollar.,0,hard_negative
+Taxpayers welcome a budget saving achieved by cutting the most popular program.,1,hard_positive
+Parents are delighted by a transport project delayed for only the sixth time.,1,hard_positive
+The northern freight route adds extra services for the holiday weekend.,0,hard_negative
+Officials proudly announce a transport project delayed for only the sixth time.,1,hard_positive
+A university team maps changes in the national coastline.,0,hard_negative
+Technology company fixes privacy concerns by asking users to share more data.,1,hard_positive
+Parliament opens three regional vaccination centres.,0,hard_negative
+Government unveils a website upgrade that removes the features people use.,1,hard_positive
+Officials proudly announce another software update that breaks the login page.,1,hard_positive
+A heatwave disrupts transport services in the region.,0,hard_negative
+A tropical cyclone delays flights at major airports.,0,hard_negative
+Workers rejoice as another software update that breaks the login page.,1,hard_positive
+The election commission adopts a new waste management policy.,0,hard_negative
+Drivers celebrate a website upgrade that removes the features people use.,1,hard_positive
+The city bus network reopens after scheduled maintenance.,0,hard_negative
+Government unveils record rent increases across every major city.,1,hard_positive
+Scientists begins a study of coastal erosion.,0,hard_negative
+The new metro station reopens after scheduled maintenance.,0,hard_negative
+Researchers publishes new climate monitoring data.,0,hard_negative
+Scientists are stunned to learn another software update that breaks the login page.,1,hard_positive
+Officials proudly announce an exciting new opportunity to pay higher taxes.,1,hard_positive
+Residents welcome another software update that breaks the login page.,1,hard_positive
+The national university announces scholarships for rural students.,0,hard_negative
+The international terminal receives funding for capacity upgrades.,0,hard_negative
+Drivers celebrate a helpful new form requiring twelve additional forms.,1,hard_positive
+Local schools approves a new treatment for clinical use.,0,hard_negative
+Residents welcome another three-hour delay on the morning commute.,1,hard_positive
+The local currency raises its economic growth forecast.,0,hard_negative
+Drivers celebrate a new service fee for using the existing service.,1,hard_positive
+The harbour bridge reopens after scheduled maintenance.,0,hard_negative
+The harbour bridge introduces new security screening equipment.,0,hard_negative
+The local currency falls to its lowest level in two years.,0,hard_negative
+Doctors begin using a new patient booking system.,0,hard_negative
+A severe thunderstorm weakens after crossing the shoreline.,0,hard_negative
+A cold front damages homes and public infrastructure.,0,hard_negative
+The international terminal remains closed after a landslide.,0,hard_negative
+Officials proudly announce a revolutionary plan to schedule another meeting.,1,hard_positive
+The government offers assistance to drought-affected farmers.,0,hard_negative
+Parents are delighted by another software update that breaks the login page.,1,hard_positive
+Commuters are thrilled by a transport project delayed for only the sixth time.,1,hard_positive
+A landslide weakens after crossing the shoreline.,0,hard_negative
+The regional airport receives funding for capacity upgrades.,0,hard_negative
+Public transport becomes more reliable after half the services are cancelled.,1,hard_positive
+The environmental agency releases findings from a five-year study.,0,hard_negative
+The agriculture department confirms upgrades to the national rail network.,0,hard_negative
+Consumer prices falls to its lowest level in two years.,0,hard_negative
+Government unveils a revolutionary plan to schedule another meeting.,1,hard_positive
+The national statistics office releases the annual budget update.,0,hard_negative
+The transport authority approves funding for a new public hospital.,0,hard_negative
+Residents welcome a helpful new form requiring twelve additional forms.,1,hard_positive
+Community clinics report an increase in seasonal flu cases.,0,hard_negative
+An earthquake moves toward the coast overnight.,0,hard_negative
+The health department tests a new medical imaging system.,0,hard_negative
+A tropical cyclone disrupts transport services in the region.,0,hard_negative
+Parliament approves funding for a new public hospital.,0,hard_negative
+A rescue team located two hikers who were missing in the national park.,0,hard_negative
+The government releases a plan for disaster recovery.,0,hard_negative
+Strong winds damages homes and public infrastructure.,0,hard_negative
+The new metro station resumes operations after severe weather.,0,hard_negative
+A heatwave causes flooding across northern communities.,0,hard_negative
+The medical regulator approves a new treatment for clinical use.,0,hard_negative
+The election commission announces additional support for public schools.,0,hard_negative
+Heavy rainfall cuts power to thousands of households.,0,hard_negative
+Workers rejoice as the discovery that water remains wet.,1,hard_positive
+Taxpayers welcome the fourth electricity price increase this year.,1,hard_positive
+The ferry service remains closed after a landslide.,0,hard_negative
+Officials proudly announce record rent increases across every major city.,1,hard_positive
+Government unveils a helpful new form requiring twelve additional forms.,1,hard_positive
+The government announces additional support for public schools.,0,hard_negative
+The local currency records modest gains in early trading.,0,hard_negative
+The city council approves funding for a new public hospital.,0,hard_negative
+The housing market increase during the latest quarter.,0,hard_negative
+A severe thunderstorm moves toward the coast overnight.,0,hard_negative
+The education board announces scholarships for rural students.,0,hard_negative
+A major highway undergoes repairs during the next month.,0,hard_negative
+NASA tests a new medical imaging system.,0,hard_negative
+Consumer prices closes slightly higher against the dollar.,0,hard_negative
+Retail sales closes slightly higher against the dollar.,0,hard_negative
+A landslide cuts power to thousands of households.,0,hard_negative
+Dense fog damages homes and public infrastructure.,0,hard_negative
+The stock market shows slower growth in major cities.,0,hard_negative
+The national space agency announces a trial of renewable energy storage.,0,hard_negative
+Public hospitals announces scholarships for rural students.,0,hard_negative
+Parliament publishes updated electricity market rules.,0,hard_negative
+The national cabinet opens three regional vaccination centres.,0,hard_negative
+The new metro station undergoes repairs during the next month.,0,hard_negative
+The health department begins a study of coastal erosion.,0,hard_negative
+The finance ministry shows slower growth in major cities.,0,hard_negative
+The central bank closes slightly higher against the dollar.,0,hard_negative
+The ferry service adds extra services for the holiday weekend.,0,hard_negative
+The health ministry adopts a new waste management policy.,0,hard_negative
+The national space agency maps changes in the national coastline.,0,hard_negative
+The coastal road opens to passengers on Monday.,0,hard_negative
+The city council sets the date for the national election.,0,hard_negative
+A major highway remains closed after a landslide.,0,hard_negative
+Consumer prices remain steady during the holiday period.,0,hard_negative
+Excellent news as commuters receive another surprise fare increase.,1,hard_positive
+The agriculture department publishes updated electricity market rules.,0,hard_negative
+A bushfire damages homes and public infrastructure.,0,hard_negative
+Government unveils the discovery that water remains wet.,1,hard_positive
+Nation celebrates record rent increases across every major city.,1,hard_positive
+Drivers celebrate a revolutionary plan to schedule another meeting.,1,hard_positive
+Consumer prices keeps interest rates unchanged.,0,hard_negative
+Residents welcome a fuel price rise just in time for the holiday weekend.,1,hard_positive
+The environmental agency publishes new climate monitoring data.,0,hard_negative
+The medical regulator report an increase in seasonal flu cases.,0,hard_negative
+The public health agency respond to hundreds of calls after the storm.,0,hard_negative
+Dense fog causes flooding across northern communities.,0,hard_negative
+The local currency keeps interest rates unchanged.,0,hard_negative
+The housing market remain steady during the holiday period.,0,hard_negative
+The energy regulator announces additional support for public schools.,0,hard_negative
+The national statistics office raises its economic growth forecast.,0,hard_negative
+Community clinics updates guidance for respiratory illness.,0,hard_negative
+School improves student wellbeing by adding three more compulsory tests.,1,hard_positive
+Commuters are thrilled by record rent increases across every major city.,1,hard_positive
+A bushfire disrupts transport services in the region.,0,hard_negative
+A cold front forces schools and offices to close.,0,hard_negative
+The health department announces a trial of renewable energy storage.,0,hard_negative
+The housing market shows slower growth in major cities.,0,hard_negative
+The weather bureau maps changes in the national coastline.,0,hard_negative
+A research institute updates guidance for respiratory illness.,0,hard_negative
+The weather bureau announces a trial of renewable energy storage.,0,hard_negative
+A research institute receives funding for cancer research.,0,hard_negative
+The government opens three regional vaccination centres.,0,hard_negative
+Dense fog leads authorities to open evacuation centres.,0,hard_negative
+Doctors announces scholarships for rural students.,0,hard_negative
+Emergency services resume classes after the summer break.,0,hard_negative
+NASA launches a new weather observation satellite.,0,hard_negative
+Heavy rainfall forces schools and offices to close.,0,hard_negative
+The housing market reports a fall in annual inflation.,0,hard_negative
+Commuters are thrilled by a public consultation held after the decision was already made.,1,hard_positive
+A university team releases findings from a five-year study.,0,hard_negative
+Public hospitals extend opening hours during winter.,0,hard_negative
+The coastal road resumes operations after severe weather.,0,hard_negative
+The court will deliver its decision in the case on Friday morning.,0,hard_negative
+The national broadcaster announced changes to its regional news schedule.,0,hard_negative
+NASA releases findings from a five-year study.,0,hard_negative
+A university team discovers evidence of water beneath the surface.,0,hard_negative
+The government confirms upgrades to the national rail network.,0,hard_negative
+The election commission publishes updated electricity market rules.,0,hard_negative
+Scientists are stunned to learn the fourth electricity price increase this year.,1,hard_positive
+A research institute announces scholarships for rural students.,0,hard_negative
+Commuters are thrilled by the discovery that water remains wet.,1,hard_positive
+Parliament announces additional support for public schools.,0,hard_negative
+The local currency remain steady during the holiday period.,0,hard_negative
+Parents are delighted by record rent increases across every major city.,1,hard_positive
+The new metro station introduces new security screening equipment.,0,hard_negative
+Hospital celebrates shorter waiting lists by changing the definition of waiting.,1,hard_positive
+Nation celebrates an exciting new opportunity to pay higher taxes.,1,hard_positive
+Researchers begins a study of coastal erosion.,0,hard_negative
+The central bank increase during the latest quarter.,0,hard_negative
+Coastal flooding causes flooding across northern communities.,0,hard_negative
+The national university report an increase in seasonal flu cases.,0,hard_negative
+The national university begin using a new patient booking system.,0,hard_negative
+The national cabinet confirms upgrades to the national rail network.,0,hard_negative
+A heatwave cuts power to thousands of households.,0,hard_negative
+The medical regulator updates guidance for respiratory illness.,0,hard_negative
+Government confirms the best way to reduce paperwork is to introduce more paperwork.,1,hard_positive
+Officials proudly announce a helpful new form requiring twelve additional forms.,1,hard_positive
+Scientists are stunned to learn the discovery that water remains wet.,1,hard_positive

@@ -1,7 +1,30 @@
-@"
+# Python environments and cache
 venv/
+.venv/
 __pycache__/
 *.pyc
+
+# Secrets
 .env
-sarcasm_model_compat.keras
-"@ | Out-File -Encoding utf8 .gitignore
+kaggle.json
+.kaggle/
+
+# Runtime output
+logs/
+*.log
+
+# Generated compatibility and backup models
+models/*.compat.keras
+models/archive*/
+models/backups/
+
+# Duplicate candidate models
+models/headline_candidate/
+models/headline_candidate_v2/
+
+# Public dataset files
+data/*.json
+data/*.zip
+
+# Keep dataset instructions
+!data/README.md
