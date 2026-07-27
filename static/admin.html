@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sarcasm Bot Administration</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="admin.css?v=20260727-admin1">
+</head>
+<body>
+  <main class="admin-shell">
+    <header class="admin-header">
+      <div>
+        <span class="eyebrow">Model administration</span>
+        <h1>Training corrections</h1>
+        <p>Review human corrections, retrain a candidate, inspect validation results, and promote only a passing model.</p>
+      </div>
+      <a class="back-link" href="/">Back to chatbot</a>
+    </header>
+
+    <section class="summary-grid">
+      <article class="summary-card"><small>Saved corrections</small><strong id="correction-count">0</strong></article>
+      <article class="summary-card"><small>Retraining status</small><strong id="training-state">Idle</strong></article>
+      <article class="summary-card"><small>Candidate gate</small><strong id="candidate-gate">Not available</strong></article>
+      <article class="summary-card"><small>Active model</small><strong id="active-model">Loading...</strong></article>
+    </section>
+
+    <section class="toolbar">
+      <button id="refresh-btn" type="button">Refresh</button>
+      <a id="export-link" class="button-link" href="/admin/feedback/export">Export CSV</a>
+      <button id="retrain-btn" class="primary" type="button">Retrain candidate</button>
+      <button id="promote-btn" class="danger" type="button" disabled>Promote candidate</button>
+    </section>
+
+    <p id="admin-message" class="admin-message" aria-live="polite"></p>
+
+    <section class="panel">
+      <div class="panel-heading">
+        <div><h2>Correction data</h2><p>Only saved binary corrections are used during binary model retraining.</p></div>
+        <input id="search-input" type="search" placeholder="Search corrections...">
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>ID</th><th>Text</th><th>Predicted</th><th>Score</th><th>Correct label</th><th>Source</th><th>Recorded</th><th>Actions</th></tr></thead>
+          <tbody id="feedback-body"></tbody>
+        </table>
+      </div>
+      <div id="empty-state" class="empty-state" hidden>No corrections have been saved.</div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-heading"><div><h2>Candidate validation</h2><p>The active model is never replaced automatically.</p></div></div>
+      <div id="metrics-grid" class="metrics-grid"></div>
+      <details><summary>Full evaluation JSON</summary><pre id="metrics-json">No candidate metrics available.</pre></details>
+    </section>
+  </main>
+  <script src="admin.js?v=20260727-admin1"></script>
+</body>
+</html>

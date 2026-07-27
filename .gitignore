@@ -27,4 +27,9 @@ data/*.json
 data/*.zip
 
 # Keep dataset instructions
-!data/README.md
+!data/README.mdfeedback/
+retraining/status.json
+retraining/hard_examples_with_feedback.csv
+build/
+dist/
+*.spec

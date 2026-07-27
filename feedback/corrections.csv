@@ -1,0 +1,2 @@
+timestamp,text,predicted_label,predicted_score,correct_label,source
+2026-07-27T12:18:59.742967+00:00,Today. it will rain in Alabama,Ambiguous,0.555100,not_sarcastic,chat

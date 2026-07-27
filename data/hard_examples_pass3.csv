@@ -1,0 +1,16 @@
+text,label,category
+Today it will rain in Alabama.,0,weather
+Rain is expected across northern Florida.,0,weather
+Temperatures will reach 30 degrees tomorrow.,0,weather
+The weather service issued a storm warning.,0,weather
+Snow is forecast for the mountain region.,0,weather
+Heavy rainfall is expected this weekend.,0,weather
+The central bank kept interest rates unchanged.,0,finance
+Parliament approved funding for a new hospital.,0,government
+NASA launched a new weather satellite.,0,science
+The train will arrive at 8:30 this morning.,0,transport
+Residents thrilled as another storm ruins the weekend.,1,weather
+Perfect weather arrives just in time for the outdoor event to be cancelled be.,1,weather
+Commuters delighted by another two-hour train delay.,1,transport
+Homebuyers celebrate another interest-rate increase.,1,finance
+Taxpayers rejoice as the project goes over budget again.,1,government

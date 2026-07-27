@@ -87,3 +87,21 @@ See `FINAL_VALIDATION.md` for the client-demo test checklist.
 ## Scope
 
 This version analyzes manually entered or pasted text. Automatic article URL extraction and direct Twitter/X fetching remain separate features.
+
+## Delivery feedback workflow
+
+Each analysis result includes **Correct** and **Incorrect** controls. Incorrect classifications are saved to `feedback/corrections.csv` beside the application. Corrections do not immediately change the active model.
+
+In the source/development build, **Retrain candidate model** starts `training/train_from_feedback.py`. It creates a new candidate under `models/headline_candidate_v3` and validates it without replacing the active model. Review the reports before promotion.
+
+The client executable intentionally disables local retraining because a packaged executable does not contain a complete editable Python training environment. It still records corrections, which can be returned to the development team for controlled retraining.
+
+## Build the Windows executable
+
+```powershell
+.\venv\Scripts\Activate.ps1
+python -m pip install pyinstaller
+.\build_exe.ps1
+```
+
+Place the client's `.env` beside `dist\SarcasmBot\SarcasmBot.exe`.
