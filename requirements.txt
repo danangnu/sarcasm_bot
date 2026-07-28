@@ -8,3 +8,8 @@ google-genai
 # The app also includes a compatibility loader for .keras archives saved with newer Keras configs.
 tensorflow>=2.16
 keras>=3.0
+
+torch>=2.2,<3
+transformers>=4.45,<5
+tokenizers
+safetensors
