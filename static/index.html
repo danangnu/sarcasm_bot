@@ -21,14 +21,13 @@
             <p>Analyze a short headline or message, review the classification, and generate a context-aware reply using Gemini or the local fallback.</p>
 
             <div class="flow-card">
-                <span>User Text</span><strong>→</strong><span>BiLSTM Score</span><strong>→</strong><span>Gemini / Fallback</span><strong>→</strong><span>Reply Score</span>
+                <span>User Text</span><strong>→</strong><span>Sarcasm Classifier</span><strong>→</strong><span>Gemini / Fallback</span><strong>→</strong><span>Reply Score</span>
             </div>
 
             <div class="calibration-card" aria-label="Confidence scale">
-                <strong>Confidence scale</strong>
-                <span>Below 40% Not sarcastic</span>
-                <span>40–64% Ambiguous</span>
-                <span>65%+ Sarcastic</span>
+                <strong>Classification policy</strong>
+                <span>Uses the active model's validated threshold</span>
+                <span>Near-threshold results are shown as ambiguous</span>
             </div>
 
             <div class="status-card">

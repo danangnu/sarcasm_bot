@@ -29,7 +29,18 @@ data/*.zip
 # Keep dataset instructions
 !data/README.mdfeedback/
 retraining/status.json
+retraining/*.log
 retraining/hard_examples_with_feedback.csv
 build/
 dist/
 *.spec
+
+# Local trained models and backups
+models_before_transformer/
+models/transformer_candidate/
+models/transformer_model/
+models/transformer_archive/
+*.safetensors
+
+# Runtime files
+retraining/*.log

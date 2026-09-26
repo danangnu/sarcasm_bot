@@ -40,6 +40,8 @@ MODEL_PATH = MODELS_DIR / "bilstm_model.keras"
 COMPAT_MODEL_PATH = MODELS_DIR / "bilstm_model.compat.keras"
 TOKENIZER_PATH = MODELS_DIR / "tokenizer.pkl"
 METADATA_PATH = MODELS_DIR / "model_metadata.json"
+TRANSFORMER_DIR = MODELS_DIR / "transformer_model"
+TRANSFORMER_METADATA_PATH = TRANSFORMER_DIR / "model_metadata.json"
 ENV_PATH = APP_DIR / ".env"
 
 load_dotenv(ENV_PATH, override=True)
@@ -55,9 +57,23 @@ def _load_metadata() -> dict:
 
 
 MODEL_METADATA = _load_metadata()
+
+def _load_transformer_metadata() -> dict:
+    if not TRANSFORMER_METADATA_PATH.exists():
+        return {}
+    try:
+        return json.loads(TRANSFORMER_METADATA_PATH.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+TRANSFORMER_METADATA = _load_transformer_metadata()
+ACTIVE_CLASSIFIER = "transformer" if (TRANSFORMER_DIR / "config.json").exists() else "bilstm"
 CALIBRATION = MODEL_METADATA.get("calibration", {}) or {}
 MAX_SEQUENCE_LENGTH = int(MODEL_METADATA.get("sequence_length", os.getenv("MAX_SEQUENCE_LENGTH", "40")))
-SARCASM_THRESHOLD = float(MODEL_METADATA.get("threshold", os.getenv("SARCASM_THRESHOLD", "0.44")))
+TRANSFORMER_AMBIGUITY_MARGIN = float(
+    os.getenv("TRANSFORMER_AMBIGUITY_MARGIN", "0.05")
+)
+SARCASM_THRESHOLD = float((TRANSFORMER_METADATA if ACTIVE_CLASSIFIER == "transformer" else MODEL_METADATA).get("threshold", os.getenv("SARCASM_THRESHOLD", "0.44")))
 AMBIGUOUS_LOW = float(os.getenv("AMBIGUOUS_LOW", "0.40"))
 AMBIGUOUS_HIGH = float(os.getenv("AMBIGUOUS_HIGH", "0.65"))
 MIN_CONTEXT_WORDS = int(os.getenv("MIN_CONTEXT_WORDS", "3"))
@@ -167,15 +183,55 @@ def confidence_label(score_value: float, label: Optional[str] = None) -> str:
     return "Moderate"
 
 
-def _decision(score_value: float, cleaned: str) -> tuple[str, Optional[bool], str, bool]:
+def _decision(
+    score_value: float,
+    cleaned: str,
+) -> tuple[str, Optional[bool], str, bool]:
     words = cleaned.split()
+
     if len(words) < MIN_CONTEXT_WORDS:
-        return "Insufficient context", None, "insufficient_context", False
-    if score_value < AMBIGUOUS_LOW:
-        return "Not sarcastic", False, "likely_not_sarcastic", True
-    if score_value < AMBIGUOUS_HIGH:
-        return "Ambiguous", None, "ambiguous", True
-    return "Sarcastic", True, "likely_sarcastic", True
+        return (
+            "Insufficient context",
+            None,
+            "insufficient_context",
+            False,
+        )
+
+    if ACTIVE_CLASSIFIER == "transformer":
+        decision_low = max(
+            0.0,
+            SARCASM_THRESHOLD - TRANSFORMER_AMBIGUITY_MARGIN,
+        )
+        decision_high = min(
+            1.0,
+            SARCASM_THRESHOLD + TRANSFORMER_AMBIGUITY_MARGIN,
+        )
+    else:
+        decision_low = AMBIGUOUS_LOW
+        decision_high = AMBIGUOUS_HIGH
+
+    if score_value < decision_low:
+        return (
+            "Not sarcastic",
+            False,
+            "likely_not_sarcastic",
+            True,
+        )
+
+    if score_value < decision_high:
+        return (
+            "Ambiguous",
+            None,
+            "ambiguous",
+            True,
+        )
+
+    return (
+        "Sarcastic",
+        True,
+        "likely_sarcastic",
+        True,
+    )
 
 
 def explain_score(score_value: float, label: str) -> str:
@@ -271,11 +327,50 @@ def _load_model():
             raise SarcasmEngineError(f"Failed to load model after compatibility patch: {second_error}") from second_error
         raise SarcasmEngineError(f"Failed to load model: {first_error}") from first_error
 
+@lru_cache(maxsize=1)
+def _load_transformer():
+    if not (TRANSFORMER_DIR / "config.json").exists():
+        raise SarcasmEngineError("Transformer model is not installed.")
+
+    try:
+        import torch
+        from transformers import (
+            AutoModelForSequenceClassification,
+            AutoTokenizer,
+        )
+
+        tokenizer = AutoTokenizer.from_pretrained(
+            TRANSFORMER_DIR,
+            local_files_only=True,
+        )
+
+        model = AutoModelForSequenceClassification.from_pretrained(
+            TRANSFORMER_DIR,
+            local_files_only=True,
+        )
+
+        model.eval()
+        return tokenizer, model, torch
+
+    except Exception as exc:
+        raise SarcasmEngineError(
+            f"Failed to load transformer model: {exc}"
+        ) from exc
+
+
+def _transformer_raw_score(text: str) -> float:
+    tokenizer, model, torch = _load_transformer()
+    max_length = int(TRANSFORMER_METADATA.get("max_length", 96))
+    inputs = tokenizer(text, return_tensors="pt", truncation=True, max_length=max_length)
+    with torch.no_grad():
+        logits = model(**inputs).logits
+        return float(torch.softmax(logits, dim=-1)[0, 1].item())
 
 def get_engine_status() -> dict:
     status = {
-        "version": "2.4.0-delivery-feedback",
-        "model_version": MODEL_METADATA.get("model_version", MODEL_METADATA.get("version", "unknown")),
+        "version": "3.0.0-transformer-ready",
+        "active_classifier": ACTIVE_CLASSIFIER,
+        "model_version": (TRANSFORMER_METADATA if ACTIVE_CLASSIFIER == "transformer" else MODEL_METADATA).get("model_version", "unknown"),
         "model_file_exists": MODEL_PATH.exists(),
         "tokenizer_file_exists": TOKENIZER_PATH.exists(),
         "metadata_file_exists": METADATA_PATH.exists(),
@@ -290,14 +385,22 @@ def get_engine_status() -> dict:
         "sequence_length": MAX_SEQUENCE_LENGTH,
         "fallback_enabled": True,
     }
-    try:
-        _load_tokenizer(); status["tokenizer_ready"] = True
-    except Exception as exc:
-        status["tokenizer_error"] = str(exc)
-    try:
-        _load_model(); status["model_ready"] = True
-    except Exception as exc:
-        status["model_error"] = str(exc)
+    if ACTIVE_CLASSIFIER == "transformer":
+        status["tokenizer_file_exists"] = (TRANSFORMER_DIR / "tokenizer.json").exists()
+        status["model_file_exists"] = (TRANSFORMER_DIR / "config.json").exists()
+        try:
+            _load_transformer(); status["model_ready"] = True; status["tokenizer_ready"] = True
+        except Exception as exc:
+            status["model_error"] = str(exc)
+    else:
+        try:
+            _load_tokenizer(); status["tokenizer_ready"] = True
+        except Exception as exc:
+            status["tokenizer_error"] = str(exc)
+        try:
+            _load_model(); status["model_ready"] = True
+        except Exception as exc:
+            status["model_error"] = str(exc)
     return status
 
 
@@ -305,6 +408,8 @@ def raw_score(text: str) -> float:
     cleaned = clean_text(text)
     if not cleaned:
         return 0.0
+    if ACTIVE_CLASSIFIER == "transformer":
+        return _transformer_raw_score(text)
     tokenizer = _load_tokenizer()
     model = _load_model()
     try:
@@ -318,13 +423,14 @@ def raw_score(text: str) -> float:
 
 
 def score(text: str) -> float:
-    return calibrate_probability(raw_score(text))
+    raw = raw_score(text)
+    return raw if ACTIVE_CLASSIFIER == "transformer" else calibrate_probability(raw)
 
 
 def analyze_text(text: str) -> SarcasmResult:
     cleaned = clean_text(text)
     raw = raw_score(text) if cleaned else 0.0
-    probability = calibrate_probability(raw)
+    probability = raw if ACTIVE_CLASSIFIER == "transformer" else calibrate_probability(raw)
     label, is_sarcastic, state, sufficient = _decision(probability, cleaned)
     return SarcasmResult(
         text=text,

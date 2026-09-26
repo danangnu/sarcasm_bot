@@ -1,0 +1,51 @@
+text,label,category,probability,predicted_label,correct
+Heavy rainfall causes flooding across northern Queensland.,0,weather,9.180233e-05,0,True
+NASA launches new weather observation satellite.,0,science,0.00015062612,0,True
+Central bank keeps interest rates unchanged.,0,economy,0.00013945776,0,True
+Parliament passes a national housing package after months of debate.,0,government,8.860632e-05,0,True
+Health officials open a new vaccination clinic in the regional centre.,0,health,9.853741e-05,0,True
+The national rail operator restores services after signal repairs.,0,transport,8.877987e-05,0,True
+Scientists detect water vapour in the atmosphere of a distant planet.,0,science,9.211283e-05,0,True
+The finance ministry publishes updated economic forecasts.,0,economy,7.785351e-05,0,True
+A severe storm damages homes along the northern coast.,0,weather,8.3840874e-05,0,True
+The city council approves funding for a new public library.,0,government,0.000108905515,0,True
+The unemployment rate falls to its lowest level in three years.,0,economy,8.56253e-05,0,True
+A passenger ferry resumes service after scheduled maintenance.,0,transport,8.675837e-05,0,True
+The education department announces scholarships for rural students.,0,education,8.140731e-05,0,True
+Emergency crews evacuate residents ahead of the approaching cyclone.,0,weather,8.744234e-05,0,True
+The national museum opens an exhibition of Indigenous art.,0,culture,8.787946e-05,0,True
+The government confirms the election will be held in October.,0,government,0.00010906464,0,True
+Researchers begin a clinical trial of a new cancer treatment.,0,health,0.000117661315,0,True
+The weather bureau records above-average rainfall during June.,0,weather,0.00010669886,0,True
+The airport adds direct flights to three regional destinations.,0,transport,0.000103905324,0,True
+The central bank raises interest rates by a quarter percentage point.,0,economy,0.00011080753,0,True
+Police close the highway after a multi-vehicle collision.,0,public_safety,0.00010605635,0,True
+The university receives funding for a new engineering laboratory.,0,education,0.00010177162,0,True
+The energy regulator releases its annual electricity market report.,0,energy,8.3376464e-05,0,True
+The government provides disaster assistance to flood-affected towns.,0,government,7.835529e-05,0,True
+The national team wins its opening match by two goals.,0,sport,0.00011463281,0,True
+The local currency strengthens after positive employment data.,0,economy,0.00010322853,0,True
+The health department updates advice for travellers.,0,health,9.005725e-05,0,True
+A new bridge opens to traffic on Monday morning.,0,transport,8.333417e-05,0,True
+The agriculture ministry forecasts a larger wheat harvest.,0,agriculture,8.527566e-05,0,True
+The court schedules the appeal hearing for next month.,0,law,0.00015493287,0,True
+Local commuters thrilled to spend another three hours sitting in traffic.,1,transport,0.9999467,1,True
+Nation celebrates exciting new opportunity to pay higher taxes.,1,economy,0.9999416,1,True
+Government unveils revolutionary plan to hold another meeting.,1,government,0.9999372,1,True
+Residents delighted as electricity prices rise for the fourth time.,1,energy,0.9999275,1,True
+Airport improves passenger experience by cancelling every morning flight.,1,transport,0.9999378,1,True
+Bank rewards loyal customers with another monthly service fee.,1,finance,0.99983454,1,True
+Council solves parking shortage by removing hundreds of parking spaces.,1,government,0.9999088,1,True
+Company makes website easier to use by hiding the login button.,1,technology,0.99991775,1,True
+Public transport achieves perfect punctuality after cancelling all services.,1,transport,0.99992573,1,True
+Hospital reduces waiting times by no longer counting people who are waiting.,1,health,0.9998814,1,True
+Government cuts paperwork with a mandatory twenty-page form.,1,government,0.99854904,1,True
+Residents welcome surprise water outage during hottest day of the year.,1,weather,0.9999362,1,True
+School supports student wellbeing with five additional exams.,1,education,0.00024002625,0,False
+Airline simplifies travel by introducing six new baggage categories.,1,transport,0.9634681,1,True
+City fixes congestion by closing the only bridge during peak hour.,1,transport,0.9990816,1,True
+Technology company protects privacy by collecting even more personal data.,1,technology,0.9994912,1,True
+Workers celebrate flexible scheduling with compulsory weekend shifts.,1,work,0.05401126,0,False
+University lowers student costs with a new fee-processing fee.,1,education,0.00090981415,0,False
+Weather service issues perfectly timed warning after the storm passes.,1,weather,0.9990626,1,True
+Nation relieved as leaders agree to discuss when they might make a decision.,1,government,0.9999459,1,True

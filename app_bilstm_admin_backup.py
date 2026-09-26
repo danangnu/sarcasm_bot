@@ -27,18 +27,15 @@ RETRAINING_STATUS_FILE = RETRAINING_DIR / "status.json"
 feedback_lock = threading.Lock()
 retrain_lock = threading.Lock()
 
-MODELS_DIR = APP_DIR / "models"
-
-# Transformer candidate created by training/train_transformer_model.py
-CANDIDATE_DIR = MODELS_DIR / "transformer_candidate"
-CANDIDATE_REPORT_DIR = APP_DIR / "reports" / "transformer_candidate"
+CANDIDATE_DIR = APP_DIR / "models" / "headline_candidate_v3"
+CANDIDATE_REPORT_DIR = APP_DIR / "reports" / "headline_candidate_v3"
 CANDIDATE_METRICS_FILE = CANDIDATE_REPORT_DIR / "evaluation_metrics.json"
-
-# Promoted Transformer used by core.py. The BiLSTM files remain untouched as rollback.
-ACTIVE_TRANSFORMER_DIR = MODELS_DIR / "transformer_model"
-TRANSFORMER_ARCHIVE_DIR = MODELS_DIR / "transformer_archive"
-TRANSFORMER_RETRAINING_SCRIPT = APP_DIR / "training" / "run_transformer_retraining.py"
-TRANSFORMER_TRAINING_LOG = RETRAINING_DIR / "transformer_training.log"
+ACTIVE_MODEL_DIR = APP_DIR / "models"
+ACTIVE_MODEL_FILE = ACTIVE_MODEL_DIR / "bilstm_model.keras"
+ACTIVE_TOKENIZER_FILE = ACTIVE_MODEL_DIR / "tokenizer.pkl"
+ACTIVE_METADATA_FILE = ACTIVE_MODEL_DIR / "model_metadata.json"
+COMPAT_MODEL_FILE = ACTIVE_MODEL_DIR / "bilstm_model.compat.keras"
+MODEL_ARCHIVE_DIR = ACTIVE_MODEL_DIR / "archive"
 
 
 class ChatRequest(BaseModel):
@@ -96,14 +93,14 @@ class PromotionRequest(BaseModel):
 
 app = FastAPI(
     title="Sarcasm Detection and Response API",
-    version="3.0.0-transformer-admin",
-    description="Transformer-enabled admin build with correction review, controlled retraining, validation reporting, and manual promotion.",
+    version="2.5.0-admin-feedback",
+    description="Admin-enabled build with correction review, controlled retraining, validation reporting, and manual model promotion.",
 )
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
     allow_credentials=False,
-    allow_methods=["GET", "POST", "PUT", "DELETE"],
+    allow_methods=["GET", "POST"],
     allow_headers=["Content-Type"],
 )
 
@@ -134,61 +131,31 @@ def _write_feedback_rows(rows: list[dict]) -> None:
     temporary.replace(FEEDBACK_FILE)
 
 
-def _read_json_file(path: Path) -> dict:
-    if not path.exists():
+def _read_candidate_metrics() -> dict:
+    if not CANDIDATE_METRICS_FILE.exists():
         return {}
     try:
-        value = json.loads(path.read_text(encoding="utf-8"))
-        return value if isinstance(value, dict) else {}
+        return json.loads(CANDIDATE_METRICS_FILE.read_text(encoding="utf-8"))
     except Exception:
         return {}
 
 
-def _read_candidate_metrics() -> dict:
-    return _read_json_file(CANDIDATE_METRICS_FILE)
-
-
 def _candidate_summary() -> dict:
     metrics = _read_candidate_metrics()
-    metadata = _read_json_file(CANDIDATE_DIR / "model_metadata.json")
-
-    config_file = CANDIDATE_DIR / "config.json"
-    metadata_file = CANDIDATE_DIR / "model_metadata.json"
-    tokenizer_file = CANDIDATE_DIR / "tokenizer.json"
-    tokenizer_config_file = CANDIDATE_DIR / "tokenizer_config.json"
-    safetensors_file = CANDIDATE_DIR / "model.safetensors"
-    pytorch_file = CANDIDATE_DIR / "pytorch_model.bin"
-
-    weights_exist = safetensors_file.exists() or pytorch_file.exists()
-    tokenizer_exists = tokenizer_file.exists() or tokenizer_config_file.exists()
-
-    promotion_gate_passed = bool(
-        metrics.get("promotion_passed")
-        or metrics.get("promotion_gate", {}).get("passed")
-    )
-
+    promotion = metrics.get("promotion_gate", {}) if isinstance(metrics, dict) else {}
+    model = CANDIDATE_DIR / "bilstm_model.keras"
+    tokenizer = CANDIDATE_DIR / "tokenizer.pkl"
+    metadata = CANDIDATE_DIR / "model_metadata.json"
     return {
-        "model_type": "transformer",
-        "architecture": (
-            metadata.get("architecture")
-            or metrics.get("architecture")
-            or "DistilRoBERTaForSequenceClassification"
-        ),
-        "exists": (
-            config_file.exists()
-            and weights_exist
-            and tokenizer_exists
-            and metadata_file.exists()
-        ),
-        "config_exists": config_file.exists(),
-        "weights_exist": weights_exist,
-        "tokenizer_exists": tokenizer_exists,
-        "metadata_exists": metadata_file.exists(),
+        "exists": model.exists() and tokenizer.exists() and metadata.exists(),
+        "model_exists": model.exists(),
+        "tokenizer_exists": tokenizer.exists(),
+        "metadata_exists": metadata.exists(),
         "metrics_available": bool(metrics),
-        "promotion_gate_passed": promotion_gate_passed,
-        "promotion_checks": metrics.get("promotion_checks", {}),
+        "promotion_gate_passed": bool(promotion.get("passed")),
         "metrics": metrics,
     }
+
 
 def _read_status() -> dict:
     if not RETRAINING_STATUS_FILE.exists():
@@ -350,170 +317,62 @@ def candidate_metrics():
 def promote_candidate(request: PromotionRequest):
     if request.confirmation != "PROMOTE":
         raise HTTPException(status_code=400, detail="Promotion confirmation is invalid.")
-
     summary = _candidate_summary()
     if not summary["exists"]:
-        raise HTTPException(
-            status_code=404,
-            detail="A complete Transformer candidate was not found.",
-        )
+        raise HTTPException(status_code=404, detail="A complete candidate model was not found.")
     if not summary["promotion_gate_passed"]:
-        raise HTTPException(
-            status_code=409,
-            detail="The Transformer candidate did not pass the validation promotion gate.",
-        )
+        raise HTTPException(status_code=409, detail="The candidate did not pass the validation promotion gate.")
 
     timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
-    backup_dir = TRANSFORMER_ARCHIVE_DIR / timestamp
-    staging_dir = MODELS_DIR / "transformer_model.new"
-    previous_dir = MODELS_DIR / "transformer_model.previous"
+    backup_dir = MODEL_ARCHIVE_DIR / timestamp
+    backup_dir.mkdir(parents=True, exist_ok=True)
+    for active in (ACTIVE_MODEL_FILE, ACTIVE_TOKENIZER_FILE, ACTIVE_METADATA_FILE):
+        if active.exists():
+            shutil.copy2(active, backup_dir / active.name)
 
-    TRANSFORMER_ARCHIVE_DIR.mkdir(parents=True, exist_ok=True)
+    for filename in ("bilstm_model.keras", "tokenizer.pkl", "model_metadata.json"):
+        source = CANDIDATE_DIR / filename
+        destination = ACTIVE_MODEL_DIR / filename
+        temporary = destination.with_suffix(destination.suffix + ".new")
+        shutil.copy2(source, temporary)
+        temporary.replace(destination)
 
-    if staging_dir.exists():
-        shutil.rmtree(staging_dir)
-    if previous_dir.exists():
-        shutil.rmtree(previous_dir)
-
-    # Copy the complete candidate first. The active model is not touched unless
-    # the candidate copy succeeds.
-    shutil.copytree(CANDIDATE_DIR, staging_dir)
-
-    if ACTIVE_TRANSFORMER_DIR.exists():
-        shutil.copytree(ACTIVE_TRANSFORMER_DIR, backup_dir)
-        ACTIVE_TRANSFORMER_DIR.rename(previous_dir)
-
-    try:
-        staging_dir.rename(ACTIVE_TRANSFORMER_DIR)
-    except Exception:
-        if previous_dir.exists() and not ACTIVE_TRANSFORMER_DIR.exists():
-            previous_dir.rename(ACTIVE_TRANSFORMER_DIR)
-        raise
-    else:
-        if previous_dir.exists():
-            shutil.rmtree(previous_dir)
-
+    COMPAT_MODEL_FILE.unlink(missing_ok=True)
     RETRAINING_DIR.mkdir(parents=True, exist_ok=True)
-    RETRAINING_STATUS_FILE.write_text(
-        json.dumps(
-            {
-                "state": "promoted",
-                "model_type": "transformer",
-                "message": (
-                    "Transformer candidate promoted. Restart the application "
-                    "to load the new classifier."
-                ),
-                "promoted_at": datetime.now(timezone.utc).isoformat(),
-                "backup_dir": str(backup_dir) if backup_dir.exists() else None,
-                "active_model_dir": str(ACTIVE_TRANSFORMER_DIR),
-                "restart_required": True,
-            },
-            indent=2,
-        ),
-        encoding="utf-8",
-    )
-
+    RETRAINING_STATUS_FILE.write_text(json.dumps({
+        "state": "promoted",
+        "message": "Candidate promoted. Restart the application to load the new model.",
+        "promoted_at": datetime.now(timezone.utc).isoformat(),
+        "backup_dir": str(backup_dir),
+        "restart_required": True,
+    }, indent=2), encoding="utf-8")
     return {
         "promoted": True,
-        "model_type": "transformer",
         "restart_required": True,
-        "backup_dir": str(backup_dir) if backup_dir.exists() else None,
-        "active_model_dir": str(ACTIVE_TRANSFORMER_DIR),
-        "message": (
-            "Transformer candidate promoted successfully. "
-            "Restart Uvicorn to load the new model."
-        ),
+        "backup_dir": str(backup_dir),
+        "message": "Candidate promoted successfully. Restart Uvicorn to load the new model.",
     }
 
 
 @app.post("/admin/retrain")
 def start_retraining():
     if getattr(sys, "frozen", False):
-        raise HTTPException(
-            status_code=409,
-            detail=(
-                "Retraining is disabled in the client executable. "
-                "Export corrections and retrain from the development project."
-            ),
-        )
-
+        raise HTTPException(status_code=409, detail="Retraining is disabled in the client executable. Export corrections and retrain from the development project.")
     minimum = 5
     count = _feedback_count()
     if count < minimum:
-        raise HTTPException(
-            status_code=409,
-            detail=(
-                f"At least {minimum} saved corrections are required. "
-                f"Current count: {count}."
-            ),
-        )
-
-    current_status = _read_status()
-    if current_status.get("state") in {"queued", "running"}:
-        raise HTTPException(
-            status_code=409,
-            detail="Transformer retraining is already running.",
-        )
-
+        raise HTTPException(status_code=409, detail=f"At least {minimum} saved corrections are required. Current count: {count}.")
     if not retrain_lock.acquire(blocking=False):
-        raise HTTPException(
-            status_code=409,
-            detail="A retraining request is already being started.",
-        )
-
+        raise HTTPException(status_code=409, detail="A retraining request is already being started.")
     try:
-        if not TRANSFORMER_RETRAINING_SCRIPT.exists():
-            raise HTTPException(
-                status_code=404,
-                detail=(
-                    "Transformer retraining wrapper is missing: "
-                    "training/run_transformer_retraining.py"
-                ),
-            )
-
+        script = APP_DIR / "training" / "train_from_feedback.py"
+        if not script.exists():
+            raise HTTPException(status_code=404, detail="Feedback retraining script is missing.")
         RETRAINING_DIR.mkdir(parents=True, exist_ok=True)
-        queued_at = datetime.now(timezone.utc).isoformat()
-
+        RETRAINING_STATUS_FILE.write_text(json.dumps({"state": "queued", "message": "Retraining is starting.", "started_at": datetime.now(timezone.utc).isoformat()}, indent=2), encoding="utf-8")
         flags = subprocess.CREATE_NO_WINDOW if sys.platform == "win32" else 0
-
-        with TRANSFORMER_TRAINING_LOG.open(
-            "a",
-            encoding="utf-8",
-            buffering=1,
-        ) as log_handle:
-            process = subprocess.Popen(
-                [sys.executable, str(TRANSFORMER_RETRAINING_SCRIPT)],
-                cwd=APP_DIR,
-                stdout=log_handle,
-                stderr=subprocess.STDOUT,
-                creationflags=flags,
-            )
-
-        RETRAINING_STATUS_FILE.write_text(
-            json.dumps(
-                {
-                    "state": "queued",
-                    "model_type": "transformer",
-                    "message": "Transformer candidate retraining is starting.",
-                    "started_at": queued_at,
-                    "process_id": process.pid,
-                    "feedback_count": count,
-                    "training_log": str(TRANSFORMER_TRAINING_LOG),
-                },
-                indent=2,
-            ),
-            encoding="utf-8",
-        )
-
-        return {
-            "started": True,
-            "model_type": "transformer",
-            "process_id": process.pid,
-            "message": (
-                "Transformer candidate retraining started. "
-                "The active model will not be replaced automatically."
-            ),
-        }
+        process = subprocess.Popen([sys.executable, str(script)], cwd=APP_DIR, creationflags=flags)
+        return {"started": True, "process_id": process.pid, "message": "Candidate-model retraining started. The active model will not be replaced automatically."}
     finally:
         retrain_lock.release()
 
