@@ -35,16 +35,18 @@ else:
     BUNDLE_DIR = Path(__file__).resolve().parent
     APP_DIR = BUNDLE_DIR
 
+APP_DIR = Path(os.getenv("DATA_ROOT", str(APP_DIR))).resolve()
+APP_DIR.mkdir(parents=True, exist_ok=True)
 MODELS_DIR = BUNDLE_DIR / "models"
 MODEL_PATH = MODELS_DIR / "bilstm_model.keras"
 COMPAT_MODEL_PATH = MODELS_DIR / "bilstm_model.compat.keras"
 TOKENIZER_PATH = MODELS_DIR / "tokenizer.pkl"
 METADATA_PATH = MODELS_DIR / "model_metadata.json"
-TRANSFORMER_DIR = MODELS_DIR / "transformer_model"
+TRANSFORMER_DIR = Path(os.getenv("DEPLOY_MODEL_DIR", str(MODELS_DIR / "transformer_model")))
 TRANSFORMER_METADATA_PATH = TRANSFORMER_DIR / "model_metadata.json"
 ENV_PATH = APP_DIR / ".env"
 
-load_dotenv(ENV_PATH, override=True)
+load_dotenv(ENV_PATH, override=not bool(os.getenv("DATA_ROOT")))
 
 
 def _load_metadata() -> dict:
@@ -68,6 +70,8 @@ def _load_transformer_metadata() -> dict:
 
 TRANSFORMER_METADATA = _load_transformer_metadata()
 ACTIVE_CLASSIFIER = "transformer" if (TRANSFORMER_DIR / "config.json").exists() else "bilstm"
+if os.getenv("REQUIRE_TRANSFORMER") == "true" and ACTIVE_CLASSIFIER != "transformer":
+    raise RuntimeError("Hosted StARCASM requires the verified transformer package.")
 CALIBRATION = MODEL_METADATA.get("calibration", {}) or {}
 MAX_SEQUENCE_LENGTH = int(MODEL_METADATA.get("sequence_length", os.getenv("MAX_SEQUENCE_LENGTH", "40")))
 TRANSFORMER_AMBIGUITY_MARGIN = float(
@@ -342,11 +346,14 @@ def _load_transformer():
         tokenizer = AutoTokenizer.from_pretrained(
             TRANSFORMER_DIR,
             local_files_only=True,
+            trust_remote_code=False,
         )
 
         model = AutoModelForSequenceClassification.from_pretrained(
             TRANSFORMER_DIR,
+            use_safetensors=True,
             local_files_only=True,
+            trust_remote_code=False,
         )
 
         model.eval()

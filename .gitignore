@@ -27,7 +27,8 @@ data/*.json
 data/*.zip
 
 # Keep dataset instructions
-!data/README.mdfeedback/
+!data/README.md
+feedback/
 retraining/status.json
 retraining/*.log
 retraining/hard_examples_with_feedback.csv
@@ -44,3 +45,8 @@ models/transformer_archive/
 
 # Runtime files
 retraining/*.log
+
+# Hosted model packages and local test output
+*.zip
+*.zip.sha256
+.pytest_cache/

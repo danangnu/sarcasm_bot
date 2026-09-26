@@ -1,3 +1,9 @@
+# StARCASM
+
+The current source includes transformer inference. For the hosted demonstration, follow [RENDER_DEPLOYMENT.md](RENDER_DEPLOYMENT.md). The trained model is distributed separately; the repository alone is not a complete deployment.
+
+The local/desktop instructions below describe earlier delivery workflows.
+
 # Sarcasm Detection Chatbot — Milestone 2 Pass 3
 
 This build continues the working FastAPI + BiLSTM + Gemini demo and focuses on safe error handling, clearer results, and client-ready presentation.
