@@ -53,3 +53,17 @@ document.addEventListener("DOMContentLoaded", () => {
   refresh();
   setInterval(loadStatus,5000);
 });
+
+// Hosted deployments keep model changes offline; API enforces the same policy.
+fetch('/admin/status').then(r => r.json()).then(status => {
+  if (!status.hosted_read_only_model) return;
+  const banner = document.createElement('p');
+  banner.textContent = 'Hosted demo: review corrections here. Retraining, promotion and rollback are performed offline.';
+  banner.style.cssText = 'padding:16px;background:#fff1d6;color:#513600;font:16px/1.5 system-ui';
+  document.body.prepend(banner);
+  const disable = () => document.querySelectorAll('button').forEach(b => {
+    if (/retrain|promot|rollback|train candidate/i.test(b.textContent) && !b.disabled) b.disabled = true;
+  });
+  disable();
+  new MutationObserver(disable).observe(document.body, {childList:true,subtree:true,attributes:true,attributeFilter:['disabled']});
+}).catch(() => {});

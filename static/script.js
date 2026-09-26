@@ -217,7 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
             geminiStatus.className = data.gemini_configured ? "status-ok" : "status-warn";
             feedbackCount.textContent = data.feedback_count || 0;
             retrainBtn.disabled = !data.retraining_available;
-            retrainStatus.textContent = data.retraining_available ? (data.retraining_status?.message || "Ready for controlled retraining.") : "Retraining is disabled in the client executable; corrections are still saved.";
+            retrainStatus.textContent = data.retraining_available ? (data.retraining_status?.message || "Ready for controlled retraining.") : "Retraining is offline for this release; corrections are still saved.";
         } catch {
             apiStatus.textContent = "Offline";
             apiStatus.className = "status-error";

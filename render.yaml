@@ -1,0 +1,36 @@
+# Deploy this repository/branch as a Render Blueprint.
+services:
+  - type: web
+    name: starcasm-research-demo
+    runtime: python
+    plan: 2c-4g
+    numInstances: 1
+    buildCommand: pip install -r requirements-render.txt
+    startCommand: python -m deploy.start
+    healthCheckPath: /readyz
+    autoDeployTrigger: off
+    disk:
+      name: starcasm-data
+      mountPath: /var/data
+      sizeGB: 10
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
+      - key: BOT_KIND
+        value: starcasm
+      - key: DATA_ROOT
+        value: /var/data
+      - key: MODEL_ARCHIVE_URL
+        sync: false
+      - key: MODEL_ARCHIVE_SHA256
+        sync: false
+      - key: DEMO_USER
+        value: reviewer
+      - key: DEMO_PASSWORD
+        sync: false
+      - key: ADMIN_USER
+        value: administrator
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: OTHER_BOT_URL
+        value: ""

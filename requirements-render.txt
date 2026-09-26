@@ -1,0 +1,10 @@
+# CPU inference only. Training and the legacy TensorFlow path are not installed.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.6.0+cpu
+transformers==4.55.0
+safetensors==0.6.2
+numpy==2.2.6
+fastapi==0.115.12
+uvicorn==0.34.2
+python-dotenv==1.1.0
+google-genai==1.30.0
